@@ -1,0 +1,12 @@
+{
+  "dev": {
+    "driver": "pg",
+    "host": "127.0.0.1",
+    "database": {"ENV": "DB_DEV"}
+  },
+  "test": {
+    "driver": "pg",
+    "host": "127.0.0.1",
+    "database": {"ENV": "DB_TEST"}
+  }
+}
