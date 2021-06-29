@@ -61,4 +61,17 @@ Testing
   $ npm run test
 ```
 
+Linting
+```
+
+```
+
+Prettier
+
+```
+
+```
+
+
+
 
