@@ -24,8 +24,10 @@
   },
   "homepage": "https://github.com/ngozi-ekekwe/StoreFront-backend#readme",
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.10",
     "@types/pg": "^8.6.0",
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",

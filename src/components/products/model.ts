@@ -1,16 +1,17 @@
 import Client from "../../db";
 
-export type Order = {
+export type Product = {
   id: Number;
-  status: String;
-  user_id: Number;
+  name: String;
+  price: Number;
+  category: String;
 };
 
-export class OrderStore {
-  async index(): Promise<Order[] | undefined> {
+export class ProductStore {
+  async index(): Promise<Product[] | undefined> {
     try {
       const conn = await Client.connect();
-      const sql = "SELECT * FROM orders";
+      const sql = "SELECT * FROM products";
       const result = await conn.query(sql);
       conn.release();
       return result.rows;
@@ -19,16 +20,19 @@ export class OrderStore {
     }
   }
 
-  async show(id: string): Promise<Order | undefined> {
+  async show(id: Number): Promise<Product | undefined> {
     try {
       const conn = await Client.connect();
-      const sql = 'SELECT * FROM orders WHERE id=${1}';
+      const sql = "SELECT * FROM products WHERE id=($1)";
       const result = await conn.query(sql, [id]);
       conn.release();
       return result.rows[0];
-    }catch(e) {
-      console.log(e)
-    }
+    } catch (e) {}
   }
-  
+
+  async delete() {}
+
+  async update() {}
+
+  async create() {}
 }
