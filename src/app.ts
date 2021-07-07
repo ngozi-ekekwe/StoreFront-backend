@@ -1,9 +1,12 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
+import routes from "./routes";
 
 const app = express();
 
 app.use(cors());
+
+app.use(express.json({ type: "application/json" }));
 
 app.get("/", (_req: Request, res: Response) => {
   res.send("Storefront API");
@@ -17,5 +20,7 @@ app.get("/health", (_req: Request, res: Response): void => {
     timestamp: Date.now(),
   });
 });
+
+app.use("/api/v1", routes);
 
 export default app;

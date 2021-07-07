@@ -26,6 +26,7 @@
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.10",
+    "@types/jsonwebtoken": "^8.5.3",
     "@types/pg": "^8.6.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
@@ -35,6 +36,7 @@
     "express": "^4.17.1",
     "jasmine": "^3.7.0",
     "jasmine-spec-reporter": "^7.0.0",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.6.0",
     "supertest": "^6.1.3"
   },

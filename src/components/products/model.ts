@@ -20,7 +20,7 @@ export class ProductStore {
     }
   }
 
-  async show(id: Number): Promise<Product | undefined> {
+  async show(id: String): Promise<Product | undefined> {
     try {
       const conn = await Client.connect();
       const sql = "SELECT * FROM products WHERE id=($1)";
@@ -30,9 +30,43 @@ export class ProductStore {
     } catch (e) {}
   }
 
-  async delete() {}
+  async delete(id: String): Promise<Product | undefined> {
+    try {
+      const conn = await Client.connect();
+      const sql = "DELETE FROM products WHERE id=($1)";
+      const result = await conn.query(sql, [id]);
+      conn.release();
+      return result.rows[0];
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
-  async update() {}
+  async update(id: String, product: Product): Promise<Product | undefined> {
+    const { name, price, category } = product;
+    try {
+      const conn = await Client.connect();
+      const sql =
+        "UPDATE products SET name=($1), price=($2), category=($3) WHERE id=($4)";
+      const result = await conn.query(sql, [name, price, category]);
+      conn.release();
+      return result.rows[0];
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
-  async create() {}
+  async create(product: Product): Promise<Product | undefined> {
+    const { name, price, category } = product;
+    try {
+      const conn = await Client.connect();
+      const sql =
+        "INSET INTO products (name, price, category) VALUES ($1, $2, $3)";
+      const result = await conn.query(sql, [name, price, category]);
+      conn.release();
+      return result.rows[0];
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }

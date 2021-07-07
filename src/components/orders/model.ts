@@ -31,9 +31,43 @@ export class OrderStore {
     }
   }
 
-  async delete() {}
+  async delete(id: String): Promise<Order | undefined> {
+    try {
+      const conn = await Client.connect();
+      const sql = "DELETE FROM orders WHERE id=($1)";
+      const result = await conn.query(sql, [id]);
+      conn.release();
+      return result.rows[0];
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
-  async update() {}
+  async update(id: String, order: Order): Promise<Order | undefined> {
+    const { status, user_id } = order;
+    try {
+      const conn = await Client.connect();
+      const sql =
+        "UPDATE orders SET status=($1) WHERE id=($4)";
+      const result = await conn.query(sql, [status]);
+      conn.release();
+      return result.rows[0];
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
-  async create() {}
+  async create(order: Order): Promise<Order | undefined> {
+    const { user_id, status } = order;
+    try {
+      const conn = await Client.connect();
+      const sql =
+        "INSET INTO orders (user_id, status) VALUES ($1, $2, $3)";
+      const result = await conn.query(sql, [user_id, status]);
+      conn.release();
+      return result.rows[0];
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }
