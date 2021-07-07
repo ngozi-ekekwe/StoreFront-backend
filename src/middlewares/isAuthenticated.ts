@@ -19,8 +19,8 @@ const isAuthenticated = (
     next();
   } catch (e) {
     res.status(401).json({
-      message: "Unauthorized"
-    })
+      message: "Unauthorized, Token required to access this route",
+    });
   }
 };
 

@@ -29,10 +29,10 @@ import {
 const router = Router();
 
 // users
+router.post("/users", createUser);
 router.get("/users", isAuthenticated, listUsers);
 router.get("/users/:userId", isAuthenticated, showUser);
 router.get("/users/:userId/orders", isAuthenticated, getCustomerOrders);
-router.post("/users", createUser);
 router.put("/users/:userId", isAuthenticated, updateUser);
 router.delete("/users/:userId", isAuthenticated, deleteUser);
 

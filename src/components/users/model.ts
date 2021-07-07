@@ -24,7 +24,7 @@ export class UserStore {
         parseInt(SALT_ROUNDS as string, 10)
       );
       const sql =
-        "INSERT INTO users (firstName, lastName, password) VALUES ($1,$2, $3)";
+        "INSERT INTO users (firstName, lastName, password) VALUES ($1,$2, $3) RETURNING *";
       const result = await conn.query(sql, [firstName, lastName, hashPassword]);
       const user = result.rows[0];
       conn.release();
@@ -56,28 +56,24 @@ export class UserStore {
     } catch (e) {}
   }
 
-  async delete(id: String): Promise<User | undefined> {
+  async delete(id: String): Promise<void | undefined> {
     try {
       const conn = await Client.connect();
       const sql = "DELETE FROM users WHERE id=($1)";
-      const result = await conn.query(sql, [id]);
-      const deletedUser = result.rows[0];
+      await conn.query(sql, [id]);
       conn.release();
-      return deletedUser;
     } catch (e) {
       console.log(e);
     }
   }
 
-  async update(id: String, user: User): Promise<User | undefined> {
+  async update(id: String, user: User): Promise<void | undefined> {
     try {
       const conn = await Client.connect();
       const sql =
         "UPDATE users SET firstName=($1), lastName=($2) WHERE id=($3)";
-      const result = await conn.query(sql, [user.firstName, user.lastName, id]);
-      const deletedUser = result.rows[0];
+      await conn.query(sql, [user.firstName, user.lastName, id]);
       conn.release();
-      return deletedUser;
     } catch (e) {
       console.log(e);
     }

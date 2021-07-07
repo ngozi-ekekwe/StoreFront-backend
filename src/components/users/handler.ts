@@ -49,9 +49,9 @@ export const deleteUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { id } = req.params;
+  const { userId } = req.params;
   try {
-    const user = await store.delete(id);
+    const user = await store.delete(userId);
     res.status(200).json(user);
   } catch (e) {
     console.log(e);
@@ -62,16 +62,18 @@ export const updateUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { id } = req.params;
+  const { userId } = req.params;
   const user: User = {
-    id: req.body.user.id,
+    id: userId,
     firstName: req.body.user.firstName,
     lastName: req.body.user.lastName,
     password: req.body.user.password,
   };
   try {
-    const updatedUser = await store.update(id, user);
-    res.status(200).json(updatedUser);
+    await store.update(userId, user);
+    res.status(200).json({
+      message: "User successfully updated",
+    });
   } catch (e) {
     console.log(e);
   }

@@ -56,15 +56,15 @@ export class ProductStore {
     }
   }
 
-  async create(product: Product): Promise<Product | undefined> {
+  async create(product: Product): Promise<Product[] | undefined> {
     const { name, price, category } = product;
     try {
       const conn = await Client.connect();
       const sql =
-        "INSET INTO products (name, price, category) VALUES ($1, $2, $3)";
+        "INSERT INTO products (name, price, category) VALUES ($1, $2, $3) RETURNING *";
       const result = await conn.query(sql, [name, price, category]);
       conn.release();
-      return result.rows[0];
+      return result.rows;
     } catch (e) {
       console.log(e);
     }

@@ -13,9 +13,10 @@ export const createProduct = async (
   const { product } = req.body;
   try {
     const newProduct = await store.create(product);
+    console.log(newProduct, "newProduct");
     res.status(201).json(newProduct);
   } catch (e) {
-    console.log(e, "this is e");
+    console.log(e);
   }
 };
 

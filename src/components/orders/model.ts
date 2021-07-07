@@ -44,11 +44,11 @@ export class OrderStore {
   }
 
   async update(id: String, order: Order): Promise<Order | undefined> {
-    const { status, user_id } = order;
+    const { status } = order;
     try {
       const conn = await Client.connect();
       const sql = "UPDATE orders SET status=($1) WHERE id=($4)";
-      const result = await conn.query(sql, [status]);
+      const result = await conn.query(sql, [status, id]);
       conn.release();
       return result.rows[0];
     } catch (e) {
@@ -56,14 +56,16 @@ export class OrderStore {
     }
   }
 
-  async create(order: Order): Promise<Order | undefined> {
+  async create(order: Order): Promise<Order[] | undefined> {
     const { user_id, status } = order;
     try {
       const conn = await Client.connect();
-      const sql = "INSET INTO orders (user_id, status) VALUES ($1, $2, $3)";
+      const sql =
+        "INSERT INTO orders (user_id, status) VALUES ($1, $2, $3) RETURNING *";
       const result = await conn.query(sql, [user_id, status]);
+      const order = result.rows[0];
       conn.release();
-      return result.rows[0];
+      return order;
     } catch (e) {
       console.log(e);
     }
