@@ -19,10 +19,7 @@ export const createOrder = async (
   }
 };
 
-export const showOrder = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const showOrder = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   try {
     const product = await store.show(id);

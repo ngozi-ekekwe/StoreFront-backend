@@ -9,7 +9,7 @@ app.use(cors());
 
 app.use(express.json({ type: "application/json" }));
 
-app.use(bodyParser.urlencoded())
+app.use(bodyParser.urlencoded());
 
 app.get("/", (_req: Request, res: Response) => {
   res.send("Storefront API");

@@ -6,10 +6,4 @@ import {
   updateOrder,
 } from "./handler";
 
-export {
-  createOrder,
-  showOrder,
-  listOrders,
-  deleteOrder,
-  updateOrder,
-};
+export { createOrder, showOrder, listOrders, deleteOrder, updateOrder };

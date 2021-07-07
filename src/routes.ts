@@ -1,4 +1,6 @@
 import { Router } from "express";
+import isAuthenticated from "./middlewares/isAuthenticated";
+
 import {
   createUser,
   showUser,
@@ -27,26 +29,25 @@ import {
 const router = Router();
 
 // users
-router.get("/users", listUsers);
-router.get("/users/:userId", showUser);
-router.get("/users/:userId/orders", getCustomerOrders);
+router.get("/users", isAuthenticated, listUsers);
+router.get("/users/:userId", isAuthenticated, showUser);
+router.get("/users/:userId/orders", isAuthenticated, getCustomerOrders);
 router.post("/users", createUser);
-router.put("/users/:userId", updateUser);
-router.delete("/users/:userId", deleteUser);
-
+router.put("/users/:userId", isAuthenticated, updateUser);
+router.delete("/users/:userId", isAuthenticated, deleteUser);
 
 // products
 router.get("/products", listProducts);
 router.get("/products/:id", showProduct);
-router.post("/products", createProduct);
-router.delete("/products/:id", deleteProduct);
-router.put("/products/:id", updateProduct);
+router.post("/products", isAuthenticated, createProduct);
+router.delete("/products/:id", isAuthenticated, deleteProduct);
+router.put("/products/:id", isAuthenticated, updateProduct);
 
 // orders
-router.get("/orders", listOrders);
-router.get("/orders/:id", showOrder);
-router.post("/orders", createOrder);
-router.delete("/orders/:id", deleteOrder);
-router.put("/orders/:id", updateOrder);
+router.get("/orders", isAuthenticated, listOrders);
+router.get("/orders/:id", isAuthenticated, showOrder);
+router.post("/orders", isAuthenticated, createOrder);
+router.delete("/orders/:id", isAuthenticated, deleteOrder);
+router.put("/orders/:id", isAuthenticated, updateOrder);
 
 export default router;

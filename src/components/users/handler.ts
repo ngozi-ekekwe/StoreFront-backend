@@ -24,16 +24,19 @@ export const createUser = async (
 };
 
 export const showUser = async (req: Request, res: Response): Promise<void> => {
-  const { id } = req.params;
+  const { userId } = req.params;
   try {
-    const user = await store.show(id);
+    const user = await store.show(userId);
     res.status(200).json(user);
   } catch (e) {
     console.log(e);
   }
 };
 
-export const listUsers = async (_req: Request, res: Response): Promise<void> => {
+export const listUsers = async (
+  _req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const users = await store.index();
     res.status(200).json(users);

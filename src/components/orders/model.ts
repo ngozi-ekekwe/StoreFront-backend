@@ -47,8 +47,7 @@ export class OrderStore {
     const { status, user_id } = order;
     try {
       const conn = await Client.connect();
-      const sql =
-        "UPDATE orders SET status=($1) WHERE id=($4)";
+      const sql = "UPDATE orders SET status=($1) WHERE id=($4)";
       const result = await conn.query(sql, [status]);
       conn.release();
       return result.rows[0];
@@ -61,8 +60,7 @@ export class OrderStore {
     const { user_id, status } = order;
     try {
       const conn = await Client.connect();
-      const sql =
-        "INSET INTO orders (user_id, status) VALUES ($1, $2, $3)";
+      const sql = "INSET INTO orders (user_id, status) VALUES ($1, $2, $3)";
       const result = await conn.query(sql, [user_id, status]);
       conn.release();
       return result.rows[0];
