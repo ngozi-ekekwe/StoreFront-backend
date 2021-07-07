@@ -1,6 +1,6 @@
 CREATE TABLE products (
   id serial PRIMARY KEY, 
-  name varchar(50), 
-  price varchar(50), 
-  category varchar(50)
+  name varchar(100), 
+  price varchar(100), 
+  category varchar(100)
 );

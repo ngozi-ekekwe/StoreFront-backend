@@ -15,7 +15,7 @@ export const createProduct = async (
     const newProduct = await store.create(product);
     res.status(201).json(newProduct);
   } catch (e) {
-    console.log(e);
+    console.log(e, 'this is e');
   }
 };
 

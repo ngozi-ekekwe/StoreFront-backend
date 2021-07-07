@@ -11,7 +11,8 @@
     "prettier": "prettier --config .prettierrc './src/**/*.ts' --write",
     "build": "npx tsc",
     "start": "nodemon",
-    "migration": "db-migrate up"
+    "migration": "db-migrate up",
+    "migration-down": "db-migrate down"
   },
   "repository": {
     "type": "git",
@@ -25,10 +26,12 @@
   "homepage": "https://github.com/ngozi-ekekwe/StoreFront-backend#readme",
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/body-parser": "^1.19.1",
     "@types/cors": "^2.8.10",
     "@types/jsonwebtoken": "^8.5.3",
     "@types/pg": "^8.6.0",
     "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "db-migrate": "^0.11.12",
     "db-migrate-pg": "^1.2.2",
