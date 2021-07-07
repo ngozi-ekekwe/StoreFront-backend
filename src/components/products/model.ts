@@ -20,6 +20,18 @@ export class ProductStore {
     }
   }
 
+  async getProductByCategory(category: String): Promise<Product[] | undefined> {
+    try {
+      const conn = await Client.connect();
+      const sql = "SELECT * FROM products WHERE category=($1)";
+      const result = await conn.query(sql, [category]);
+      conn.release();
+      return result.rows;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   async show(id: String): Promise<Product | undefined> {
     try {
       const conn = await Client.connect();
@@ -67,6 +79,18 @@ export class ProductStore {
       return result.rows;
     } catch (e) {
       console.log(e);
+    }
+  }
+
+  async getProductsByCategory(category: String) : Promise<Product[] | undefined> {
+    try {
+      const conn = await Client.connect();
+      const sql = "SELECT * FROM products WHERE category=($1)";
+      const result = await conn.query(sql, [category]);
+      conn.release();
+      return result.rows;
+    }catch(e) {
+      console.log(e)
     }
   }
 }

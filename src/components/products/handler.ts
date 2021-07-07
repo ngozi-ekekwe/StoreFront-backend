@@ -13,7 +13,6 @@ export const createProduct = async (
   const { product } = req.body;
   try {
     const newProduct = await store.create(product);
-    console.log(newProduct, "newProduct");
     res.status(201).json(newProduct);
   } catch (e) {
     console.log(e);
@@ -34,11 +33,17 @@ export const showProduct = async (
 };
 
 export const listProducts = async (
-  _req: Request,
+  req: Request,
   res: Response
 ): Promise<void> => {
+  const {category} = req.query;
+  let products;
   try {
-    const products = await store.index();
+    if(category) {
+      products = await store.getProductByCategory(category as String);
+    }else {
+      products = await store.index();
+    }
     res.status(200).json(products);
   } catch (e) {
     console.log(e);
