@@ -16,6 +16,7 @@ import {
   listProducts,
   deleteProduct,
   updateProduct,
+  getMostPopularProduct,
 } from "./components/products";
 
 import {
@@ -39,6 +40,7 @@ router.delete("/users/:userId", isAuthenticated, deleteUser);
 // products
 router.get("/products", listProducts);
 router.get("/products/:id", showProduct);
+router.get("/products/most-popular", getMostPopularProduct);
 router.post("/products", isAuthenticated, createProduct);
 router.delete("/products/:id", isAuthenticated, deleteProduct);
 router.put("/products/:id", isAuthenticated, updateProduct);

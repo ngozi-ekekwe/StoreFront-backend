@@ -36,12 +36,12 @@ export const listProducts = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const {category} = req.query;
+  const { category } = req.query;
   let products;
   try {
-    if(category) {
+    if (category) {
       products = await store.getProductByCategory(category as String);
-    }else {
+    } else {
       products = await store.index();
     }
     res.status(200).json(products);
@@ -69,14 +69,26 @@ export const updateProduct = async (
 ): Promise<void> => {
   const { id } = req.params;
   const product: Product = {
-    id: req.body.user.id,
-    name: req.body.product.firstName,
+    id: req.body.product.id,
+    name: req.body.product.name,
     price: req.body.product.price,
     category: req.body.product.category,
   };
   try {
-    const updatedProdut = await store.update(id, product);
-    res.status(200).json(updatedProdut);
+    await store.update(id, product);
+    res.status(200).json({
+      message: "Product Successfully updated",
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getMostPopularProduct = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
   } catch (e) {
     console.log(e);
   }

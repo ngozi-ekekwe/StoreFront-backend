@@ -1,9 +1,22 @@
 import Client from "../../db";
 
+export type OrderItem = {
+  quantity: Number;
+  productId: String;
+};
+
 export type Order = {
   id: Number;
   status: String;
   user_id: Number;
+  orderItems: OrderItem[];
+};
+
+export type OrderProduct = {
+  id: String;
+  orderId: String;
+  quantity: Number;
+  productId: String;
 };
 
 export class OrderStore {
@@ -47,7 +60,7 @@ export class OrderStore {
     const { status } = order;
     try {
       const conn = await Client.connect();
-      const sql = "UPDATE orders SET status=($1) WHERE id=($4)";
+      const sql = "UPDATE orders SET status=($1) WHERE id=($4) RETURNING *";
       const result = await conn.query(sql, [status, id]);
       conn.release();
       return result.rows[0];
@@ -61,11 +74,32 @@ export class OrderStore {
     try {
       const conn = await Client.connect();
       const sql =
-        "INSERT INTO orders (user_id, status) VALUES ($1, $2, $3) RETURNING *";
+        "INSERT INTO orders (user_id, status) VALUES ($1, $2) RETURNING *";
       const result = await conn.query(sql, [user_id, status]);
       const order = result.rows[0];
       conn.release();
       return order;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async addProductOrder(
+    orderId: String,
+    orderItems: []
+  ): Promise<void | undefined> {
+    try {
+      const conn = await Client.connect();
+      for (let i = 0; i < orderItems.length; i++) {
+        const sql =
+          "INSERT INTO order_products (order_id, quantity, product_id) VALUES ($1, $2, $3);";
+        // @ts-ignore
+        const quantity = orderItems[i].quantity;
+        // @ts-ignore
+        const productId = orderItems[i].productId;
+        await conn.query(sql, [Number(orderId), quantity, Number(productId)]);
+      }
+      conn.release();
     } catch (e) {
       console.log(e);
     }

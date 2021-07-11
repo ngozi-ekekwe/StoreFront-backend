@@ -60,7 +60,7 @@ export class ProductStore {
       const conn = await Client.connect();
       const sql =
         "UPDATE products SET name=($1), price=($2), category=($3) WHERE id=($4)";
-      const result = await conn.query(sql, [name, price, category]);
+      const result = await conn.query(sql, [name, price, category, id]);
       conn.release();
       return result.rows[0];
     } catch (e) {
@@ -82,15 +82,17 @@ export class ProductStore {
     }
   }
 
-  async getProductsByCategory(category: String) : Promise<Product[] | undefined> {
+  async getProductsByCategory(
+    category: String
+  ): Promise<Product[] | undefined> {
     try {
       const conn = await Client.connect();
       const sql = "SELECT * FROM products WHERE category=($1)";
       const result = await conn.query(sql, [category]);
       conn.release();
       return result.rows;
-    }catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
   }
 }

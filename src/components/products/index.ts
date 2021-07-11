@@ -4,6 +4,7 @@ import {
   listProducts,
   deleteProduct,
   updateProduct,
+  getMostPopularProduct,
 } from "./handler";
 
 export {
@@ -12,4 +13,5 @@ export {
   listProducts,
   deleteProduct,
   updateProduct,
+  getMostPopularProduct,
 };

@@ -13,6 +13,10 @@ export const createOrder = async (
   const { order } = req.body;
   try {
     const newOrder = await store.create(order);
+    // @ts-ignore
+    const orderId = newOrder.id;
+    const orderItems = order.orderItems;
+    await store.addProductOrder(orderId, orderItems);
     res.status(201).json(newOrder);
   } catch (e) {
     console.log(e);
@@ -63,10 +67,13 @@ export const updateOrder = async (
     id: req.body.order.id,
     status: req.body.order.status,
     user_id: req.body.order.user_id,
+    orderItems: req.body.order_items,
   };
   try {
-    const updatedProdut = await store.update(id, order);
-    res.status(200).json(updatedProdut);
+    await store.update(id, order);
+    res.status(200).json({
+      message: "Order Successfully updated",
+    });
   } catch (e) {
     console.log(e);
   }
