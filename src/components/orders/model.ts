@@ -32,7 +32,20 @@ export class OrderStore {
     }
   }
 
-  async show(id: string): Promise<Order | undefined> {
+  async getOrdersByStatus(status: String): Promise<Order[] | undefined> {
+    console.log(status, 'this is status')
+    try {
+      const conn = await Client.connect();
+      const sql = 'SELECT * FROM orders WHERE status=($1)';
+      const result = await conn.query(sql, [status]);
+      conn.release;
+      return result.rows;
+    }catch(e){
+      console.log(e)
+    }
+  }
+
+  async show(id: String): Promise<Order | undefined> {
     try {
       const conn = await Client.connect();
       const sql = "SELECT * FROM orders WHERE id=($1)";
@@ -60,7 +73,7 @@ export class OrderStore {
     const { status } = order;
     try {
       const conn = await Client.connect();
-      const sql = "UPDATE orders SET status=($1) WHERE id=($4) RETURNING *";
+      const sql = "UPDATE orders SET status=($1) WHERE id=($2) RETURNING *";
       const result = await conn.query(sql, [status, id]);
       conn.release();
       return result.rows[0];

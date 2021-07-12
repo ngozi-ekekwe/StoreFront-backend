@@ -26,19 +26,26 @@ export const createOrder = async (
 export const showOrder = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   try {
-    const product = await store.show(id);
-    res.status(200).json(product);
+    const order = await store.show(id);
+    res.status(200).json(order);
   } catch (e) {
     console.log(e);
   }
 };
 
 export const listOrders = async (
-  _req: Request,
+  req: Request,
   res: Response
 ): Promise<void> => {
+  const { status } = req.query;
+  console.log(status)
+  let orders;
   try {
-    const orders = await store.index();
+    if(status) {
+      orders = await store.getOrdersByStatus(status as String);
+    }else {
+      orders = await store.index();
+    }
     res.status(200).json(orders);
   } catch (e) {
     console.log(e);
