@@ -4,20 +4,36 @@ The company stakeholders want to create an online storefront to showcase their g
 These are the notes from a meeting with the frontend developer that describe what endpoints the API needs to supply, as well as data shapes the frontend and backend have agreed meet the requirements of the application. 
 
 ## API Endpoints
+
 #### Products
 - Index 
+  http://localhost:3000/api/v1/products
 - Show
+  http://localhost:3000/api/v1/products/1
+
 - Create [token required]
+  http://localhost:3000/api/v1/products
+
+
 - [OPTIONAL] Top 5 most popular products 
+
 - [OPTIONAL] Products by category (args: product category)
+  http://localhost:3000/api/v1/products?category=lemon
+
 
 #### Users
 - Index [token required]
+  http://localhost:3000/api/v1/users
+
 - Show [token required]
-- Create N[token required]
+  http://localhost:3000/api/v1/users/1
+
+- Create [token required]
+http://localhost:3000/api/v1/users
 
 #### Orders
 - Current Order by user (args: user id)[token required]
+
 - [OPTIONAL] Completed Orders by user (args: user id)[token required]
 
 ## Data Shapes

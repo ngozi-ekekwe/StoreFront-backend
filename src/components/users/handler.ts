@@ -16,7 +16,7 @@ export const createUser = async (
   const { user } = req.body;
   try {
     const newUser = await store.create(user);
-    const token = jwt.sign({ newUser }, JWT_SECRET as string);
+    const token = jwt.sign({ user: newUser }, JWT_SECRET as string);
     res.status(201).json(token);
   } catch (e) {
     console.log(e);
@@ -90,4 +90,9 @@ export const getCustomerOrders = async (
   } catch (e) {
     console.log(e);
   }
+};
+
+// cart items should be orders that are still open
+export const getCartItems = async() => {
+  
 };

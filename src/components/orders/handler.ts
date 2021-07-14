@@ -11,13 +11,21 @@ export const createOrder = async (
   res: Response
 ): Promise<void> => {
   const { order } = req.body;
+  const { userId } = req.params;
+  let orderId;
+  let userOrder;
   try {
-    const newOrder = await store.create(order);
-    // @ts-ignore
-    const orderId = newOrder.id;
+    userOrder = await store.getUserOpenOrders(userId);
+    if(userOrder?.id) {
+      orderId = userOrder.id;
+    }else {
+      userOrder = await store.create(order);
+      // @ts-ignore
+      orderId = userOrder.id;
+    }
     const orderItems = order.orderItems;
     await store.addProductOrder(orderId, orderItems);
-    res.status(201).json(newOrder);
+    res.status(201).json(userOrder);
   } catch (e) {
     console.log(e);
   }
@@ -38,7 +46,6 @@ export const listOrders = async (
   res: Response
 ): Promise<void> => {
   const { status } = req.query;
-  console.log(status)
   let orders;
   try {
     if(status) {

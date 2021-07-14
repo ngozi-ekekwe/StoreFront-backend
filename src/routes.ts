@@ -1,5 +1,6 @@
 import { Router } from "express";
 import isAuthenticated from "./middlewares/isAuthenticated";
+import validateUser from "./middlewares/validateUser";
 
 import {
   createUser,
@@ -36,6 +37,7 @@ router.get("/users/:userId", isAuthenticated, showUser);
 router.get("/users/:userId/orders", isAuthenticated, getCustomerOrders);
 router.put("/users/:userId", isAuthenticated, updateUser);
 router.delete("/users/:userId", isAuthenticated, deleteUser);
+router.get("/users/:userId/cart", isAuthenticated, validateUser)
 
 // products
 router.get("/products", listProducts);
@@ -48,8 +50,11 @@ router.put("/products/:id", isAuthenticated, updateProduct);
 // orders
 router.get("/orders", isAuthenticated, listOrders);
 router.get("/orders/:id", isAuthenticated, showOrder);
-router.post("/orders", isAuthenticated, createOrder);
+router.post("/orders/:userId", isAuthenticated, createOrder);
 router.delete("/orders/:id", isAuthenticated, deleteOrder);
 router.put("/orders/:id", isAuthenticated, updateOrder);
 
+// add product to cart
+// router.post("/", isAuthenticated, validateUser )
+// router.get("/", isAuthenticated, validateUser)
 export default router;

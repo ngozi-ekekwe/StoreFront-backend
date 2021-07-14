@@ -24,7 +24,7 @@ export class UserStore {
         parseInt(SALT_ROUNDS as string, 10)
       );
       const sql =
-        "INSERT INTO users (firstName, lastName, password) VALUES ($1,$2, $3) RETURNING *";
+        "INSERT INTO users (firstname, lastname, password) VALUES ($1,$2, $3) RETURNING *";
       const result = await conn.query(sql, [firstName, lastName, hashPassword]);
       const user = result.rows[0];
       conn.release();
@@ -80,10 +80,11 @@ export class UserStore {
   }
 
   async getUsersOrder(userId: String): Promise<Order[] | undefined> {
+    const status = 'closed'
     try {
       const conn = await Client.connect();
-      const sql = "SELECT * FROM orders WHERE user_id=($1)";
-      const result = await conn.query(sql, [userId]);
+      const sql = "SELECT * FROM orders WHERE user_id=($1) WHERE AND status=($2)";
+      const result = await conn.query(sql, [userId, status]);
       const orders = result.rows;
       conn.release();
       return orders;

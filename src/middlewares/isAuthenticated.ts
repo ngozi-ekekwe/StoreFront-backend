@@ -15,7 +15,7 @@ const isAuthenticated = (
   const token: string | undefined = authorization?.split(" ")[1];
   try {
     // @ts-ignore: Unreachable code error
-    jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET);
     next();
   } catch (e) {
     res.status(401).json({
