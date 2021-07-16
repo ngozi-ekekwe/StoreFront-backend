@@ -32,8 +32,8 @@ export const createOrder = async (
     const products = await store.getAllProductsInAnOrder(orderId);
     const result = {
       ...userOrder,
-      items: products
-    }
+      items: products,
+    };
     res.status(201).json(result);
   } catch (e) {
     console.log(e);

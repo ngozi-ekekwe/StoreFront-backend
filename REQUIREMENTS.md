@@ -8,6 +8,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 #### Products
 - Index 
   http://localhost:3000/api/v1/products
+  
 - Show
   http://localhost:3000/api/v1/products/1
 
