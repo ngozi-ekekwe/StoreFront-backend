@@ -5,7 +5,8 @@ import {
   deleteOrder,
   updateOrder,
   listCustomersCompletedOrders,
-  getCustomerCart,
+  getCustomerCurrentOrder,
+  getProductsInOrder,
 } from "./handler";
 
 export {
@@ -15,5 +16,6 @@ export {
   deleteOrder,
   updateOrder,
   listCustomersCompletedOrders,
-  getCustomerCart,
+  getCustomerCurrentOrder,
+  getProductsInOrder,
 };

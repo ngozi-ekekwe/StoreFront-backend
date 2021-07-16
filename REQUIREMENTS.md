@@ -14,7 +14,6 @@ These are the notes from a meeting with the frontend developer that describe wha
 - Create [token required]
   http://localhost:3000/api/v1/products
 
-
 - [OPTIONAL] Top 5 most popular products 
 
 - [OPTIONAL] Products by category (args: product category)
@@ -33,8 +32,10 @@ http://localhost:3000/api/v1/users
 
 #### Orders
 - Current Order by user (args: user id)[token required]
+http://localhost:3000/api/v1/orders/customer/1
 
 - [OPTIONAL] Completed Orders by user (args: user id)[token required]
+
 
 ## Data Shapes
 #### Product

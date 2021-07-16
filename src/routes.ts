@@ -27,7 +27,8 @@ import {
   deleteOrder,
   updateOrder,
   listCustomersCompletedOrders,
-  getCustomerCart,
+  getCustomerCurrentOrder,
+  getProductsInOrder,
 } from "./components/orders";
 
 const router = Router();
@@ -51,21 +52,25 @@ router.put("/products/:id", isAuthenticated, updateProduct);
 
 // orders
 router.get("/orders", isAuthenticated, listOrders);
+router.get("/orders/:id", isAuthenticated, showOrder);
+router.post("/orders/:userId", isAuthenticated, createOrder);
 router.get(
-  "/orders/:userId",
+  "/orders/user/completed/:userId",
   isAuthenticated,
   validateUser,
   listCustomersCompletedOrders
 );
-router.get("/orders/:id", isAuthenticated, showOrder);
-router.post("/orders/:userId", isAuthenticated, createOrder);
+
+
 router.delete("/orders/:id", isAuthenticated, deleteOrder);
 router.put("/orders/:id", isAuthenticated, updateOrder);
 
-// cart
-router.get("/cart/:userId", isAuthenticated, validateUser, getCustomerCart);
-router.get("" )
-// add product to cart
-// router.post("/", isAuthenticated, validateUser )
-// router.get("/", isAuthenticated, validateUser)
+// customer current order
+router.get(
+  "/orders/user/:userId",
+  isAuthenticated,
+  validateUser,
+  getCustomerCurrentOrder
+);
+
 export default router;

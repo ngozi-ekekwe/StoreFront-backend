@@ -57,14 +57,14 @@ export class OrderStore {
     }
   }
 
-  async getUserClosedOrders(userId: String): Promise<Order | undefined> {
+  async getUserClosedOrders(userId: String): Promise<Order[] | undefined> {
     try {
       const conn = await Client.connect();
       const status = "closed";
       const sql = "SELECT * FROM orders WHERE user_id=($1) AND status=($2)";
       const result = await conn.query(sql, [userId, status]);
       conn.release();
-      return result.rows[0];
+      return result.rows;
     } catch (e) {
       console.log(e);
     }
@@ -143,19 +143,28 @@ export class OrderStore {
     }
   }
 
-  async getProductsInAnOrder(
-    productId: String
-  ): Promise<void | undefined> {
+  async getAllProductsInAnOrder(orderId: String) {
     try {
       const conn = await Client.connect();
-      const sql = '';
-      const result = conn.query(sql, [])
+      const sql =
+        "SELECT * FROM products INNER JOIN order_products ON products.id = order_products.product_id WHERE order_products.order_id =($1)";
+      const result = await conn.query(sql, [orderId]);
       conn.release();
-      return 
-    }catch(e) {
+      return result.rows;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async getProductsInAnOrder(productId: String): Promise<void | undefined> {
+    try {
+      const conn = await Client.connect();
+      const sql = "";
+      const result = conn.query(sql, []);
+      conn.release();
+      return;
+    } catch (e) {
       console.log(e);
     }
   }
 }
-
-

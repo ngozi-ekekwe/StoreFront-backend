@@ -29,7 +29,12 @@ export const createOrder = async (
     }
     const orderItems = order.orderItems;
     await store.addProductOrder(orderId, orderItems);
-    res.status(201).json(userOrder);
+    const products = await store.getAllProductsInAnOrder(orderId);
+    const result = {
+      ...userOrder,
+      items: products
+    }
+    res.status(201).json(result);
   } catch (e) {
     console.log(e);
   }
@@ -104,20 +109,28 @@ export const listCustomersCompletedOrders = async (
   const { userId } = req.params;
   try {
     const orders = await store.getUserClosedOrders(userId);
+    console.log(orders);
     res.status(200).json(orders);
   } catch (e) {
     console.log(e);
   }
 };
 
-export const getCustomerCart = async (
+export const getCustomerCurrentOrder = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   const { userId } = req.params;
   try {
     const cart = await store.getUserOpenOrders(userId);
-    res.status(200).json(cart);
+    const orderId = cart?.id;
+    // @ts-ignore
+    const products = await store.getAllProductsInAnOrder(orderId);
+    const order = {
+      ...cart,
+      cart: products,
+    };
+    res.status(200).json(order);
   } catch (e) {
     console.log(e);
   }
@@ -126,10 +139,12 @@ export const getCustomerCart = async (
 export const getProductsInOrder = async (
   req: Request,
   res: Response
-) : Promise<void>  => {
+): Promise<void> => {
+  const { orderId } = req.params;
   try {
-
-  }catch(e) {
-    console.log(e)
+    const products = await store.getAllProductsInAnOrder(orderId);
+    res.status(200).send(products);
+  } catch (e) {
+    console.log(e);
   }
-}
+};
