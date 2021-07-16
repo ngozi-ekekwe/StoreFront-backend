@@ -53,14 +53,13 @@ router.put("/products/:id", isAuthenticated, updateProduct);
 // orders
 router.get("/orders", isAuthenticated, listOrders);
 router.get("/orders/:id", isAuthenticated, showOrder);
-router.post("/orders/:userId", isAuthenticated, createOrder);
+router.post("/orders/:userId", isAuthenticated, validateUser, createOrder);
 router.get(
   "/orders/user/completed/:userId",
   isAuthenticated,
   validateUser,
   listCustomersCompletedOrders
 );
-
 
 router.delete("/orders/:id", isAuthenticated, deleteOrder);
 router.put("/orders/:id", isAuthenticated, updateOrder);
