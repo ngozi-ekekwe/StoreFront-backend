@@ -1,4 +1,4 @@
-import Client from "../../db";
+import Client from "../../database";
 
 export type OrderItem = {
   quantity: Number;

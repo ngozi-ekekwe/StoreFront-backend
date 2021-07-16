@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import Client from "../../db";
+import Client from "../../database";
 import dotenv from "dotenv";
 import { Order } from "../orders/model";
 
