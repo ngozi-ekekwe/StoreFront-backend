@@ -35,24 +35,37 @@ export class OrderStore {
   async getOrdersByStatus(status: String): Promise<Order[] | undefined> {
     try {
       const conn = await Client.connect();
-      const sql = 'SELECT * FROM orders WHERE status=($1)';
+      const sql = "SELECT * FROM orders WHERE status=($1)";
       const result = await conn.query(sql, [status]);
       conn.release;
       return result.rows;
-    }catch(e){
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
   }
 
   async getUserOpenOrders(userId: String): Promise<Order | undefined> {
     try {
       const conn = await Client.connect();
-      const status = 'open';
-      const sql = 'SELECT * FROM orders WHERE user_id=($1) AND status=($2)';
+      const status = "open";
+      const sql = "SELECT * FROM orders WHERE user_id=($1) AND status=($2)";
       const result = await conn.query(sql, [userId, status]);
       conn.release();
-      return result.rows[0]
-    }catch(e) {
+      return result.rows[0];
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async getUserClosedOrders(userId: String): Promise<Order | undefined> {
+    try {
+      const conn = await Client.connect();
+      const status = "closed";
+      const sql = "SELECT * FROM orders WHERE user_id=($1) AND status=($2)";
+      const result = await conn.query(sql, [userId, status]);
+      conn.release();
+      return result.rows[0];
+    } catch (e) {
       console.log(e);
     }
   }
@@ -129,4 +142,20 @@ export class OrderStore {
       console.log(e);
     }
   }
+
+  async getProductsInAnOrder(
+    productId: String
+  ): Promise<void | undefined> {
+    try {
+      const conn = await Client.connect();
+      const sql = '';
+      const result = conn.query(sql, [])
+      conn.release();
+      return 
+    }catch(e) {
+      console.log(e);
+    }
+  }
 }
+
+

@@ -26,6 +26,8 @@ import {
   listOrders,
   deleteOrder,
   updateOrder,
+  listCustomersCompletedOrders,
+  getCustomerCart,
 } from "./components/orders";
 
 const router = Router();
@@ -37,7 +39,7 @@ router.get("/users/:userId", isAuthenticated, showUser);
 router.get("/users/:userId/orders", isAuthenticated, getCustomerOrders);
 router.put("/users/:userId", isAuthenticated, updateUser);
 router.delete("/users/:userId", isAuthenticated, deleteUser);
-router.get("/users/:userId/cart", isAuthenticated, validateUser)
+router.get("/users/:userId/cart", isAuthenticated, validateUser);
 
 // products
 router.get("/products", listProducts);
@@ -49,11 +51,20 @@ router.put("/products/:id", isAuthenticated, updateProduct);
 
 // orders
 router.get("/orders", isAuthenticated, listOrders);
+router.get(
+  "/orders/:userId",
+  isAuthenticated,
+  validateUser,
+  listCustomersCompletedOrders
+);
 router.get("/orders/:id", isAuthenticated, showOrder);
 router.post("/orders/:userId", isAuthenticated, createOrder);
 router.delete("/orders/:id", isAuthenticated, deleteOrder);
 router.put("/orders/:id", isAuthenticated, updateOrder);
 
+// cart
+router.get("/cart/:userId", isAuthenticated, validateUser, getCustomerCart);
+router.get("" )
 // add product to cart
 // router.post("/", isAuthenticated, validateUser )
 // router.get("/", isAuthenticated, validateUser)

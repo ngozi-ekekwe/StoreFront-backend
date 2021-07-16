@@ -93,6 +93,4 @@ export const getCustomerOrders = async (
 };
 
 // cart items should be orders that are still open
-export const getCartItems = async() => {
-  
-};
+export const getCartItems = async () => {};

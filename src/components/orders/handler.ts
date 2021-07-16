@@ -14,12 +14,16 @@ export const createOrder = async (
   const { userId } = req.params;
   let orderId;
   let userOrder;
+  const o = {
+    ...order,
+    status: "open",
+  };
   try {
     userOrder = await store.getUserOpenOrders(userId);
-    if(userOrder?.id) {
+    if (userOrder?.id) {
       orderId = userOrder.id;
-    }else {
-      userOrder = await store.create(order);
+    } else {
+      userOrder = await store.create(o);
       // @ts-ignore
       orderId = userOrder.id;
     }
@@ -48,9 +52,9 @@ export const listOrders = async (
   const { status } = req.query;
   let orders;
   try {
-    if(status) {
+    if (status) {
       orders = await store.getOrdersByStatus(status as String);
-    }else {
+    } else {
       orders = await store.index();
     }
     res.status(200).json(orders);
@@ -92,3 +96,40 @@ export const updateOrder = async (
     console.log(e);
   }
 };
+
+export const listCustomersCompletedOrders = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { userId } = req.params;
+  try {
+    const orders = await store.getUserClosedOrders(userId);
+    res.status(200).json(orders);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getCustomerCart = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { userId } = req.params;
+  try {
+    const cart = await store.getUserOpenOrders(userId);
+    res.status(200).json(cart);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getProductsInOrder = async (
+  req: Request,
+  res: Response
+) : Promise<void>  => {
+  try {
+
+  }catch(e) {
+    console.log(e)
+  }
+}

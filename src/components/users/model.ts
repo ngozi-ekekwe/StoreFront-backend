@@ -80,10 +80,11 @@ export class UserStore {
   }
 
   async getUsersOrder(userId: String): Promise<Order[] | undefined> {
-    const status = 'closed'
+    const status = "closed";
     try {
       const conn = await Client.connect();
-      const sql = "SELECT * FROM orders WHERE user_id=($1) WHERE AND status=($2)";
+      const sql =
+        "SELECT * FROM orders WHERE user_id=($1) WHERE AND status=($2)";
       const result = await conn.query(sql, [userId, status]);
       const orders = result.rows;
       conn.release();
