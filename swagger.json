@@ -1,5 +1,5 @@
 {
-  "swagger": "2.0",
+  "openapi": "3.0.0",
   "info": {
     "version": "1.0.0",
     "title": "Storefront",
@@ -10,22 +10,72 @@
     }
   },
   "host": "localhost:3000",
+  "components": {
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Bearer Token"
+      },
+      "BasicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      }
+    }
+  },
   "basePath": "/api/v1",
   "tags": [
     {
+      "name": "Products",
+      "description": "Products API"
+    },
+    {
       "name": "Users",
-      "description": "API for Users"
+      "description": "Users API"
     },
     {
       "name": "Orders",
-      "description": "API for Orders"
-    },
-    {
-      "name": "Products",
-      "description": "API for Products"
+      "description": "Orders API"
     }
   ],
   "paths": {
+    "/products": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get all Products",
+        "parameters": [{
+          "name": "category",
+          "in": "query",
+          "description": "Product Category",
+          "required": false
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Products"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Create Product",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/NewProduct"
+            }
+          }
+        }
+      }
+    },
     "/users": {
       "get": {
         "tags": [
@@ -64,28 +114,6 @@
             }
           }
         }
-      },
-      "put": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Update a User",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Delete a User",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
       }
     },
     "/users/{userId}": {
@@ -109,52 +137,6 @@
             "schema": {
               "$ref": "#/definitions/User"
             }
-          }
-        }
-      }
-    },
-    "/products": {
-      "get": {
-        "tags": [
-          "Products"
-        ],
-        "summary": "Get all Products",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Products"
-        ],
-        "summary": "Create a new Product",
-        "responses": {
-          "201": {
-            "description": "Created"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Products"
-        ],
-        "summary": "Update a Product",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Products"
-        ],
-        "summary": "Delete a Product",
-        "responses": {
-          "200": {
-            "description": "OK"
           }
         }
       }
@@ -188,51 +170,13 @@
       "get": {
         "tags": [
           "Orders"
-        ],
-        "summary": "Get all Orders",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Orders"
-        ],
-        "summary": "Create a new Order",
-        "responses": {
-          "201": {
-            "description": "Created"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Orders"
-        ],
-        "summary": "Update an Order",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Orders"
-        ],
-        "summary": "Delete an Order",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
+        ]
       }
     }
+   
   },
   "definitions": {
-    "User": {
+    "NewUser": {
       "properties": {
         "user": {
           "type": "object",
@@ -250,6 +194,22 @@
               "type": "string"
             }
           }
+        }
+      }
+    },
+    "User": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
         }
       }
     },
@@ -288,6 +248,26 @@
     },
     "Product": {
       "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID of Product"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of Product"
+        },
+        "price": {
+          "type": "number",
+          "description": "Price of Product"
+        },
+        "category":{
+          "type": "string",
+          "description": "Category of Product"
+        }
+      }
+    },
+    "NewProduct": {
+      "properties": {
         "product": {
           "type": "object",
           "properties": {
@@ -310,6 +290,10 @@
           }
         }
       }
+    },
+    "Products": {
+      "type": "array",
+      "$ref": "#/definitions/Product"
     }
   },
   "schemes": [
@@ -320,5 +304,13 @@
   ],
   "produces": [
     "application/json"
+  ],
+  "security": [
+    {
+      "BasicAuth": []
+    },
+    {
+      "Bearer": []
+    }
   ]
 }

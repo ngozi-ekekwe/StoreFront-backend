@@ -28,7 +28,6 @@ import {
   updateOrder,
   listCustomersCompletedOrders,
   getCustomerCurrentOrder,
-  getProductsInOrder,
 } from "./components/orders";
 
 const router = Router();
