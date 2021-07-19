@@ -1,16 +1,16 @@
 import {
-  createUser,
-  showUser,
-  listUsers,
+  addUser,
+  getUserById,
+  getAllUsers,
   deleteUser,
   updateUser,
   getCustomerOrders,
 } from "./handler";
 
 export {
-  createUser,
-  showUser,
-  listUsers,
+  addUser,
+  getUserById,
+  getAllUsers,
   deleteUser,
   updateUser,
   getCustomerOrders,

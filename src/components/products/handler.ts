@@ -6,33 +6,33 @@ dotenv.config();
 
 const store = new ProductStore();
 
-export const createProduct = async (
+export const addProduct = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   const { product } = req.body;
   try {
-    const newProduct = await store.create(product);
+    const newProduct = await store.addProduct(product);
     res.status(201).json(newProduct);
   } catch (e) {
     console.log(e);
   }
 };
 
-export const showProduct = async (
+export const getProductById = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   const { id } = req.params;
   try {
-    const product = await store.show(id);
+    const product = await store.getProductById(id);
     res.status(200).json(product);
   } catch (e) {
     console.log(e);
   }
 };
 
-export const listProducts = async (
+export const getAllProducts = async (
   req: Request,
   res: Response
 ): Promise<void> => {
@@ -42,7 +42,7 @@ export const listProducts = async (
     if (category) {
       products = await store.getProductByCategory(category as String);
     } else {
-      products = await store.index();
+      products = await store.getAllProducts();
     }
     res.status(200).json(products);
   } catch (e) {
@@ -56,7 +56,7 @@ export const deleteProduct = async (
 ): Promise<void> => {
   const { id } = req.params;
   try {
-    const product = await store.delete(id);
+    const product = await store.deleteProduct(id);
     res.status(200).json(product);
   } catch (e) {
     console.log(e);
@@ -75,7 +75,7 @@ export const updateProduct = async (
     category: req.body.product.category,
   };
   try {
-    await store.update(id, product);
+    await store.updateProduct(id, product);
     res.status(200).json({
       message: "Product Successfully updated",
     });

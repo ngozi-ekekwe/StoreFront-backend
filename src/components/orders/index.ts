@@ -1,7 +1,7 @@
 import {
-  createOrder,
-  showOrder,
-  listOrders,
+  addOrder,
+  getOrder,
+  getOrders,
   deleteOrder,
   updateOrder,
   listCustomersCompletedOrders,
@@ -10,9 +10,9 @@ import {
 } from "./handler";
 
 export {
-  createOrder,
-  showOrder,
-  listOrders,
+  addOrder,
+  getOrder,
+  getOrders,
   deleteOrder,
   updateOrder,
   listCustomersCompletedOrders,

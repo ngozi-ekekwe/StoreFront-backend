@@ -17,7 +17,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 - [OPTIONAL] Top 5 most popular products 
 
-- [OPTIONAL] Products by category (args: product category)
+- Products by category (args: product category)
   http://localhost:3000/api/v1/products?category=lemon
 
 
@@ -29,7 +29,7 @@ These are the notes from a meeting with the frontend developer that describe wha
   http://localhost:3000/api/v1/users/1
 
 - Create [token required]
-http://localhost:3000/api/v1/users
+  http://localhost:3000/api/v1/users
 
 
 
@@ -37,7 +37,7 @@ http://localhost:3000/api/v1/users
 - Current Order by user (args: user id)[token required]
 http://localhost:3000/api/v1/orders/customer/1
 
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
+- Completed Orders by user (args: user id)[token required]
 
 
 ## Data Shapes

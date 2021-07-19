@@ -6,10 +6,7 @@ dotenv.config();
 
 const store = new OrderStore();
 
-export const createOrder = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const addOrder = async (req: Request, res: Response): Promise<void> => {
   const { order } = req.body;
   const { userId } = req.params;
   let orderId;
@@ -23,7 +20,7 @@ export const createOrder = async (
     if (userOrder?.id) {
       orderId = userOrder.id;
     } else {
-      userOrder = await store.create(o);
+      userOrder = await store.addOrder(o);
       // @ts-ignore
       orderId = userOrder.id;
     }
@@ -40,27 +37,24 @@ export const createOrder = async (
   }
 };
 
-export const showOrder = async (req: Request, res: Response): Promise<void> => {
+export const getOrder = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   try {
-    const order = await store.show(id);
+    const order = await store.getOrder(id);
     res.status(200).json(order);
   } catch (e) {
     console.log(e);
   }
 };
 
-export const listOrders = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const getOrders = async (req: Request, res: Response): Promise<void> => {
   const { status } = req.query;
   let orders;
   try {
     if (status) {
       orders = await store.getOrdersByStatus(status as String);
     } else {
-      orders = await store.index();
+      orders = await store.getOrders();
     }
     res.status(200).json(orders);
   } catch (e) {

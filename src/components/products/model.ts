@@ -8,7 +8,7 @@ export type Product = {
 };
 
 export class ProductStore {
-  async index(): Promise<Product[] | undefined> {
+  async getAllProducts(): Promise<Product[] | undefined> {
     try {
       const conn = await Client.connect();
       const sql = "SELECT * FROM products";
@@ -32,7 +32,7 @@ export class ProductStore {
     }
   }
 
-  async show(id: String): Promise<Product | undefined> {
+  async getProductById(id: String): Promise<Product | undefined> {
     try {
       const conn = await Client.connect();
       const sql = "SELECT * FROM products WHERE id=($1)";
@@ -42,7 +42,7 @@ export class ProductStore {
     } catch (e) {}
   }
 
-  async delete(id: String): Promise<Product | undefined> {
+  async deleteProduct(id: String): Promise<Product | undefined> {
     try {
       const conn = await Client.connect();
       const sql = "DELETE FROM products WHERE id=($1)";
@@ -54,7 +54,10 @@ export class ProductStore {
     }
   }
 
-  async update(id: String, product: Product): Promise<Product | undefined> {
+  async updateProduct(
+    id: String,
+    product: Product
+  ): Promise<Product | undefined> {
     const { name, price, category } = product;
     try {
       const conn = await Client.connect();
@@ -68,7 +71,7 @@ export class ProductStore {
     }
   }
 
-  async create(product: Product): Promise<Product[] | undefined> {
+  async addProduct(product: Product): Promise<Product[] | undefined> {
     const { name, price, category } = product;
     try {
       const conn = await Client.connect();

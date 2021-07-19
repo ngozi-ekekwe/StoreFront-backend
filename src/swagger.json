@@ -11,10 +11,12 @@
   },
   "host": "localhost:3000",
   "basePath": "/api/v1",
-  "servers": [{
-    "url": "http://localhost:3000/api/v1",
-    "description": "Development server"
-  }],
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "Development server"
+    }
+  ],
   "components": {
     "securitySchemes": {
       "Bearer": {
@@ -50,11 +52,21 @@
           "Products"
         ],
         "summary": "Create Product",
+        "requestBody": {
+          "description": "Product",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/NewProduct"
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
             "description": "Created",
             "schema": {
-              "$ref": "#/definitions/NewProduct"
+              "$ref": "#/definitions/Product"
             }
           }
         }
@@ -64,12 +76,14 @@
           "Products"
         ],
         "summary": "Get all Products",
-        "parameters": [{
-          "name": "category",
-          "in": "query",
-          "description": "Product Category",
-          "required": false
-        }],
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "description": "Product Category",
+            "required": false
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -153,7 +167,6 @@
         "summary": "Get a Product",
         "parameters": [
           {
-
             "name": "productId",
             "in": "path",
             "required": true,
@@ -171,13 +184,23 @@
       }
     },
     "/orders": {
-      "get": {
+      "post": {
         "tags": [
           "Orders"
-        ]
+        ],
+        "summary": "Create an Order",
+        "requestBody": {
+          "description": "Order",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/NewOrder"
+              }
+            }
+          }
+        }
       }
     }
-   
   },
   "definitions": {
     "NewUser": {
@@ -185,9 +208,6 @@
         "user": {
           "type": "object",
           "properties": {
-            "id": {
-              "type": "string"
-            },
             "firstName": {
               "type": "string"
             },
@@ -221,15 +241,11 @@
       "type": "array",
       "$ref": "#/definitions/User"
     },
-    "Order": {
+    "NewOrder": {
       "properties": {
         "order": {
           "type": "object",
           "properties": {
-            "id": {
-              "type": "string",
-              "description": "ID of Order"
-            },
             "userId": {
               "type": "integer",
               "description": "ID of User"
@@ -264,7 +280,7 @@
           "type": "number",
           "description": "Price of Product"
         },
-        "category":{
+        "category": {
           "type": "string",
           "description": "Category of Product"
         }
@@ -275,10 +291,6 @@
         "product": {
           "type": "object",
           "properties": {
-            "id": {
-              "type": "string",
-              "description": "ID of Product"
-            },
             "name": {
               "type": "string",
               "description": "Name of Product"
@@ -287,7 +299,7 @@
               "type": "number",
               "description": "Price of Product"
             },
-            "category":{
+            "category": {
               "type": "string",
               "description": "Category of Product"
             }
@@ -298,6 +310,30 @@
     "Products": {
       "type": "array",
       "$ref": "#/definitions/Product"
+    },
+    "Order": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID of Order"
+        },
+        "userId": {
+          "type": "integer",
+          "description": "ID of User"
+        },
+        "productId": {
+          "type": "integer",
+          "description": "ID of Product"
+        },
+        "quantity": {
+          "type": "integer",
+          "description": "Quantity of Product"
+        },
+        "price": {
+          "type": "number",
+          "description": "Price of Product"
+        }
+      }
     }
   },
   "schemes": [

@@ -20,7 +20,7 @@ export type OrderProduct = {
 };
 
 export class OrderStore {
-  async index(): Promise<Order[] | undefined> {
+  async getOrders(): Promise<Order[] | undefined> {
     try {
       const conn = await Client.connect();
       const sql = "SELECT * FROM orders";
@@ -70,7 +70,7 @@ export class OrderStore {
     }
   }
 
-  async show(id: String): Promise<Order | undefined> {
+  async getOrder(id: String): Promise<Order | undefined> {
     try {
       const conn = await Client.connect();
       const sql = "SELECT * FROM orders WHERE id=($1)";
@@ -107,7 +107,7 @@ export class OrderStore {
     }
   }
 
-  async create(order: Order): Promise<Order[] | undefined> {
+  async addOrder(order: Order): Promise<Order[] | undefined> {
     const { user_id, status } = order;
     try {
       const conn = await Client.connect();

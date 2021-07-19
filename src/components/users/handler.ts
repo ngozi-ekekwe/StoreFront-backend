@@ -9,13 +9,10 @@ const store = new UserStore();
 
 const { JWT_SECRET } = process.env;
 
-export const createUser = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const addUser = async (req: Request, res: Response): Promise<void> => {
   const { user } = req.body;
   try {
-    const newUser = await store.create(user);
+    const newUser = await store.addUser(user);
     const token = jwt.sign({ user: newUser }, JWT_SECRET as string);
     res.status(201).json({
       token,
@@ -26,22 +23,25 @@ export const createUser = async (
   }
 };
 
-export const showUser = async (req: Request, res: Response): Promise<void> => {
+export const getUserById = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { userId } = req.params;
   try {
-    const user = await store.show(userId);
+    const user = await store.getUserById(userId);
     res.status(200).json(user);
   } catch (e) {
     console.log(e);
   }
 };
 
-export const listUsers = async (
+export const getAllUsers = async (
   _req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const users = await store.index();
+    const users = await store.getAllUsers();
     res.status(200).json(users);
   } catch (e) {
     console.log(e);

@@ -15,7 +15,7 @@ export type User = {
 };
 
 export class UserStore {
-  async create(user: any): Promise<User | undefined> {
+  async addUser(user: any): Promise<User | undefined> {
     const { firstName, lastName, password } = user;
     try {
       const conn = await Client.connect();
@@ -34,7 +34,7 @@ export class UserStore {
     }
   }
 
-  async index(): Promise<User[] | undefined> {
+  async getAllUsers(): Promise<User[] | undefined> {
     try {
       const conn = await Client.connect();
       const sql = "SELECT * FROM users";
@@ -46,7 +46,7 @@ export class UserStore {
     }
   }
 
-  async show(id: String): Promise<User | undefined> {
+  async getUserById(id: String): Promise<User | undefined> {
     try {
       const conn = await Client.connect();
       const sql = "SELECT * FROM users WHERE id=($1)";

@@ -1,16 +1,16 @@
 import {
-  createProduct,
-  showProduct,
-  listProducts,
+  addProduct,
+  getProductById,
+  getAllProducts,
   deleteProduct,
   updateProduct,
   getMostPopularProduct,
 } from "./handler";
 
 export {
-  createProduct,
-  showProduct,
-  listProducts,
+  addProduct,
+  getProductById,
+  getAllProducts,
   deleteProduct,
   updateProduct,
   getMostPopularProduct,
