@@ -3,13 +3,18 @@
   "info": {
     "version": "1.0.0",
     "title": "Storefront",
-    "description": "Storefront",
+    "description": "Storefront API",
     "license": {
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
     }
   },
   "host": "localhost:3000",
+  "basePath": "/api/v1",
+  "servers": [{
+    "url": "http://localhost:3000/api/v1",
+    "description": "Development server"
+  }],
   "components": {
     "securitySchemes": {
       "Bearer": {
@@ -24,7 +29,6 @@
       }
     }
   },
-  "basePath": "/api/v1",
   "tags": [
     {
       "name": "Products",
@@ -41,6 +45,20 @@
   ],
   "paths": {
     "/products": {
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Create Product",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/NewProduct"
+            }
+          }
+        }
+      },
       "get": {
         "tags": [
           "Products"
@@ -57,20 +75,6 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/Products"
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Products"
-        ],
-        "summary": "Create Product",
-        "responses": {
-          "201": {
-            "description": "Created",
-            "schema": {
-              "$ref": "#/definitions/NewProduct"
             }
           }
         }
@@ -96,16 +100,16 @@
           "Users"
         ],
         "summary": "Create a new User",
-        "parameters": [
-          {
-            "name": "user",
-            "in": "body",
-            "description": "User that we want to create",
-            "schema": {
-              "$ref": "#/definitions/User"
+        "requestBody": {
+          "description": "User",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/NewUser"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "201": {
             "description": "Created",

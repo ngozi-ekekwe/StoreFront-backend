@@ -26,11 +26,7 @@ const app = express();
 
 app.use(cors());
 
-app.use(
-  "/api-docs",
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerDocument)
-);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(express.json({ type: "application/json" }));
 

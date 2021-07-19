@@ -17,7 +17,10 @@ export const createUser = async (
   try {
     const newUser = await store.create(user);
     const token = jwt.sign({ user: newUser }, JWT_SECRET as string);
-    res.status(201).json(token);
+    res.status(201).json({
+      token,
+      success: true,
+    });
   } catch (e) {
     console.log(e);
   }
