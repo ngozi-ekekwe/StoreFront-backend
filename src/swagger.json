@@ -200,6 +200,30 @@
           }
         }
       }
+    },
+    "/orders/{userId}": {
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Create New Order",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "ID of user that whose order we want to create"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {

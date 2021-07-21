@@ -70,11 +70,11 @@ export class OrderStore {
     }
   }
 
-  async getOrder(id: String): Promise<Order | undefined> {
+  async getOrder(id: String, userId: String): Promise<Order | undefined> {
     try {
       const conn = await Client.connect();
-      const sql = "SELECT * FROM orders WHERE id=($1)";
-      const result = await conn.query(sql, [id]);
+      const sql = "SELECT * FROM orders WHERE id=($1) AND user_id=($2)";
+      const result = await conn.query(sql, [id, userId]);
       conn.release();
       return result.rows[0];
     } catch (e) {
@@ -94,12 +94,11 @@ export class OrderStore {
     }
   }
 
-  async update(id: String, order: Order): Promise<Order | undefined> {
-    const { status } = order;
+  async update(orderId: String, order: Order, userId: String): Promise<Order | undefined> {
     try {
       const conn = await Client.connect();
-      const sql = "UPDATE orders SET status=($1) WHERE id=($2) RETURNING *";
-      const result = await conn.query(sql, [status, id]);
+      const sql = "UPDATE orders SET status=completed WHERE id=($2) AND user_id=($3) RETURNING *";
+      const result = await conn.query(sql, [status, orderId, userId]);
       conn.release();
       return result.rows[0];
     } catch (e) {

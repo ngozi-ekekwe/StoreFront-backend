@@ -24,10 +24,7 @@ import {
   addOrder,
   getOrder,
   getOrders,
-  deleteOrder,
   updateOrder,
-  listCustomersCompletedOrders,
-  getCustomerCurrentOrder,
 } from "./components/orders";
 
 const router = Router();
@@ -50,25 +47,10 @@ router.delete("/products/:id", isAuthenticated, deleteProduct);
 router.put("/products/:id", isAuthenticated, updateProduct);
 
 // orders
-router.get("/orders", isAuthenticated, getOrders);
-router.get("/orders/:id", isAuthenticated, getOrder);
 router.post("/orders/:userId", isAuthenticated, validateUser, addOrder);
-router.get(
-  "/orders/user/completed/:userId",
-  isAuthenticated,
-  validateUser,
-  listCustomersCompletedOrders
-);
+router.get("/orders/:userId/:orderId", isAuthenticated, validateUser, getOrder);
+router.put("/orders/:userId/:orderId", isAuthenticated, validateUser, updateOrder);
+router.get("/orders/:userId", isAuthenticated, validateUser, getOrders);
 
-router.delete("/orders/:id", isAuthenticated, deleteOrder);
-router.put("/orders/:id", isAuthenticated, updateOrder);
-
-// customer current order
-router.get(
-  "/orders/user/:userId",
-  isAuthenticated,
-  validateUser,
-  getCustomerCurrentOrder
-);
 
 export default router;

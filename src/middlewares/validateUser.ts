@@ -14,7 +14,7 @@ function validateUser(req: Request, res: Response, next: Function) {
     const token: string | undefined = authorization?.split(" ")[1];
     // @ts-ignore: Unreachable code error
     const decoded = jwt.verify(token, JWT_SECRET);
-    if (parseInt(userId, 10) !== decoded.user.id) {
+    if (decoded.user && parseInt(userId, 10) !== decoded.user.id) {
       res.status(401).json({
         message: "User id does not match!",
       });
