@@ -41,7 +41,6 @@ router.get("/users/:userId/cart", isAuthenticated, validateUser);
 // products
 router.get("/products", getAllProducts);
 router.get("/products/:id", getProductById);
-router.get("/products/most-popular", getMostPopularProduct);
 router.post("/products", isAuthenticated, addProduct);
 router.delete("/products/:id", isAuthenticated, deleteProduct);
 router.put("/products/:id", isAuthenticated, updateProduct);
@@ -56,6 +55,5 @@ router.put(
   validateUser,
   updateOrder
 );
-
 
 export default router;

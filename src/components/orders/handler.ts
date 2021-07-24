@@ -56,7 +56,7 @@ export const updateOrder = async (
 ): Promise<void> => {
   const { userId, orderId } = req.params;
   const { order } = req.body;
-  const status = order.status;  
+  const status = order.status;
   try {
     await store.update(orderId, status, userId);
     res.status(200).json({

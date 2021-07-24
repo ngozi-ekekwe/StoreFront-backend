@@ -113,7 +113,6 @@ export class OrderStore {
     }
   }
   async addOrder(user_id: String): Promise<Order[] | undefined> {
-
     try {
       const conn = await Client.connect();
       const status = "open";

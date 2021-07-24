@@ -98,4 +98,17 @@ export class ProductStore {
       console.log(e);
     }
   }
+
+  async getMostPopularProducts(): Promise<Product[] | undefined> {
+    try {
+      const conn = await Client.connect();
+      const sql =
+        "SELECT product_id, count(product_id), products.* from order_products INNER JOIN products ON product_id = products.id group by product_id, products.name, products.id order by count(product_id) desc LIMIT 5";
+      const result = await conn.query(sql);
+      conn.release();
+      return result.rows;
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }

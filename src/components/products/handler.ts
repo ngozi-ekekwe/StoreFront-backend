@@ -36,11 +36,14 @@ export const getAllProducts = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { category } = req.query;
+  const { category, filter } = req.query;
   let products;
   try {
     if (category) {
       products = await store.getProductByCategory(category as String);
+    }
+    if (filter) {
+      products = await store.getMostPopularProducts();
     } else {
       products = await store.getAllProducts();
     }
@@ -89,6 +92,10 @@ export const getMostPopularProduct = async (
   res: Response
 ): Promise<void> => {
   try {
+    const products = await store.getMostPopularProducts();
+    res.status(200).json({
+      message: "Most popular products",
+    });
   } catch (e) {
     console.log(e);
   }

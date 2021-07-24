@@ -58,6 +58,12 @@
             "in": "query",
             "description": "Product Category",
             "required": false
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Most Popular",
+            "required": false
           }
         ],
         "responses": {
