@@ -135,6 +135,9 @@ export const getCustomerCurrentOrder = async (
     const order = {
       ...cart,
       cart: products,
+
+
+      
     };
     res.status(200).json(order);
   } catch (e) {
