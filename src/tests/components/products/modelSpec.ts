@@ -2,7 +2,7 @@ import { ProductStore, Product } from "../../../components/products/model";
 
 const store = new ProductStore();
 
-describe("ProductStore", () => {
+describe("ProductStore Methods", () => {
   it("should be defined", () => {
     expect(store).toBeDefined();
   });
