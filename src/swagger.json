@@ -33,12 +33,12 @@
   },
   "tags": [
     {
-      "name": "Products",
-      "description": "Products API"
-    },
-    {
       "name": "Users",
       "description": "Users API"
+    },
+    {
+      "name": "Products",
+      "description": "Products API"
     },
     {
       "name": "Orders",
@@ -47,6 +47,28 @@
   ],
   "paths": {
     "/products": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get all Products",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "description": "Product Category",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Products"
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
           "Products"
@@ -67,28 +89,6 @@
             "description": "Created",
             "schema": {
               "$ref": "#/definitions/Product"
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Products"
-        ],
-        "summary": "Get all Products",
-        "parameters": [
-          {
-            "name": "category",
-            "in": "query",
-            "description": "Product Category",
-            "required": false
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/Products"
             }
           }
         }
@@ -183,12 +183,12 @@
         }
       }
     },
-    "/orders": {
+    "/orders/{userId}": {
       "post": {
         "tags": [
           "Orders"
         ],
-        "summary": "Create an Order",
+        "summary": "Create a new Order",
         "requestBody": {
           "description": "Order",
           "content": {
@@ -198,28 +198,99 @@
               }
             }
           }
-        }
-      }
-    },
-    "/orders/{userId}": {
-      "post": {
-        "tags": [
-          "Orders"
-        ],
-        "summary": "Create New Order",
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
         "parameters": [
           {
             "name": "userId",
             "in": "path",
             "required": true,
-            "description": "ID of user that whose order we want to create"
+            "description": "ID of user whose order we want to create"
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get all Orders",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "ID of user whose orders we want to find"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "description": "Status of order that we want to find"
+          }
+        ]
+      }
+    },
+    "/orders/{userId}/{orderId}": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get a single customer order",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "ID of user whose order we want to find"
+          },
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "description": "ID of order that we want to find"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/Order"
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Update a single order for a customer",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "ID of user whose order we want to find"
+          },
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "description": "ID of order that we want to find"
+          }
+        ],
+        "requestBody": {
+          "description": "Order",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/UpdateOrder"
+              }
             }
           }
         }
@@ -227,6 +298,22 @@
     }
   },
   "definitions": {
+    "UpdateOrder": {
+      "properties": {
+        "order": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "completed",
+                "open"
+              ]
+            }
+          }
+        }
+      }
+    },
     "NewUser": {
       "properties": {
         "user": {
@@ -270,21 +357,11 @@
         "order": {
           "type": "object",
           "properties": {
-            "userId": {
-              "type": "integer",
-              "description": "ID of User"
-            },
-            "productId": {
-              "type": "integer",
-              "description": "ID of Product"
-            },
-            "quantity": {
-              "type": "integer",
-              "description": "Quantity of Product"
-            },
-            "price": {
-              "type": "number",
-              "description": "Price of Product"
+            "orderItems": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/OrderItem"
+              }
             }
           }
         }
@@ -328,6 +405,19 @@
               "description": "Category of Product"
             }
           }
+        }
+      }
+    },
+    "OrderItem": {
+      "type": "object",
+      "properties": {
+        "productId": {
+          "type": "string",
+          "description": "ID of Product"
+        },
+        "quantity": {
+          "type": "number",
+          "description": "Quantity of Product"
         }
       }
     },

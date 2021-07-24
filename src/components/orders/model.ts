@@ -20,11 +20,11 @@ export type OrderProduct = {
 };
 
 export class OrderStore {
-  async getOrders(): Promise<Order[] | undefined> {
+  async getOrders(userId: String): Promise<Order[] | undefined> {
     try {
       const conn = await Client.connect();
-      const sql = "SELECT * FROM orders";
-      const result = await conn.query(sql);
+      const sql = "SELECT * FROM orders WHERE user_id=($1)";
+      const result = await conn.query(sql, [userId]);
       conn.release();
       return result.rows;
     } catch (e) {
@@ -32,11 +32,14 @@ export class OrderStore {
     }
   }
 
-  async getOrdersByStatus(status: String): Promise<Order[] | undefined> {
+  async getOrdersByStatus(
+    status: String,
+    userId: String
+  ): Promise<Order[] | undefined> {
     try {
       const conn = await Client.connect();
-      const sql = "SELECT * FROM orders WHERE status=($1)";
-      const result = await conn.query(sql, [status]);
+      const sql = "SELECT * FROM orders WHERE status=($1) AND user_id=($2)";
+      const result = await conn.query(sql, [status, userId]);
       conn.release;
       return result.rows;
     } catch (e) {
@@ -47,9 +50,8 @@ export class OrderStore {
   async getUserOpenOrders(userId: String): Promise<Order | undefined> {
     try {
       const conn = await Client.connect();
-      const status = "open";
-      const sql = "SELECT * FROM orders WHERE user_id=($1) AND status=($2)";
-      const result = await conn.query(sql, [userId, status]);
+      const sql = "SELECT * FROM orders WHERE user_id=($1) AND status='open'";
+      const result = await conn.query(sql, [userId]);
       conn.release();
       return result.rows[0];
     } catch (e) {
@@ -94,10 +96,15 @@ export class OrderStore {
     }
   }
 
-  async update(orderId: String, order: Order, userId: String): Promise<Order | undefined> {
+  async update(
+    orderId: String,
+    status: String,
+    userId: String
+  ): Promise<Order | undefined> {
     try {
       const conn = await Client.connect();
-      const sql = "UPDATE orders SET status=completed WHERE id=($2) AND user_id=($3) RETURNING *";
+      const sql =
+        "UPDATE orders SET status=($1) WHERE id=($2) AND user_id=($3) RETURNING *";
       const result = await conn.query(sql, [status, orderId, userId]);
       conn.release();
       return result.rows[0];
@@ -105,11 +112,11 @@ export class OrderStore {
       console.log(e);
     }
   }
+  async addOrder(user_id: String): Promise<Order[] | undefined> {
 
-  async addOrder(order: Order): Promise<Order[] | undefined> {
-    const { user_id, status } = order;
     try {
       const conn = await Client.connect();
+      const status = "open";
       const sql =
         "INSERT INTO orders (user_id, status) VALUES ($1, $2) RETURNING *";
       const result = await conn.query(sql, [user_id, status]);

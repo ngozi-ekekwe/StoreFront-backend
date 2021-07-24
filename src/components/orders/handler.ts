@@ -7,21 +7,17 @@ dotenv.config();
 const store = new OrderStore();
 
 export const addOrder = async (req: Request, res: Response): Promise<void> => {
-  const { order } = req.body;
-  const { userId } = req.params;
   let orderId;
   let userOrder;
-  const newOrder = {
-    ...order,
-    status: "open",
-  };
+  const { userId } = req.params;
+  const { order } = req.body;
   try {
     // check if a user has already placed an order
     userOrder = await store.getUserOpenOrders(userId);
     if (userOrder?.id) {
       orderId = userOrder.id;
     } else {
-      userOrder = await store.addOrder(newOrder);
+      userOrder = await store.addOrder(userId);
       // @ts-ignore
       orderId = userOrder.id;
     }
@@ -44,7 +40,11 @@ export const getOrder = async (req: Request, res: Response): Promise<void> => {
   const { orderId, userId } = req.params;
   try {
     const order = await store.getOrder(orderId, userId);
-    res.status(200).json(order);
+    const products = await store.getAllProductsInAnOrder(orderId);
+    res.status(200).json({
+      ...order,
+      items: products,
+    });
   } catch (e) {
     console.log(e);
   }
@@ -55,14 +55,10 @@ export const updateOrder = async (
   res: Response
 ): Promise<void> => {
   const { userId, orderId } = req.params;
-  const order: Order = {
-    id: req.body.order.id,
-    status: req.body.order.status,
-    user_id: req.body.order.user_id,
-    orderItems: req.body.order_items,
-  };
+  const { order } = req.body;
+  const status = order.status;  
   try {
-    await store.update(orderId, order, userId);
+    await store.update(orderId, status, userId);
     res.status(200).json({
       message: "Order Successfully updated",
     });
@@ -73,14 +69,28 @@ export const updateOrder = async (
 
 export const getOrders = async (req: Request, res: Response): Promise<void> => {
   const { status } = req.query;
+  const { userId } = req.params;
   let orders;
   try {
     if (status) {
-      orders = await store.getOrdersByStatus(status as String);
+      orders = await store.getOrdersByStatus(status as String, userId);
     } else {
-      orders = await store.getOrders();
+      orders = await store.getOrders(userId);
     }
     res.status(200).json(orders);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getProductsInOrder = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { orderId } = req.params;
+  try {
+    const products = await store.getAllProductsInAnOrder(orderId);
+    res.status(200).send(products);
   } catch (e) {
     console.log(e);
   }
@@ -99,8 +109,6 @@ export const deleteOrder = async (
   }
 };
 
-
-
 export const listCustomersCompletedOrders = async (
   req: Request,
   res: Response
@@ -108,7 +116,6 @@ export const listCustomersCompletedOrders = async (
   const { userId } = req.params;
   try {
     const orders = await store.getUserClosedOrders(userId);
-    console.log(orders);
     res.status(200).json(orders);
   } catch (e) {
     console.log(e);
@@ -130,19 +137,6 @@ export const getCustomerCurrentOrder = async (
       cart: products,
     };
     res.status(200).json(order);
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-export const getProductsInOrder = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const { orderId } = req.params;
-  try {
-    const products = await store.getAllProductsInAnOrder(orderId);
-    res.status(200).send(products);
   } catch (e) {
     console.log(e);
   }

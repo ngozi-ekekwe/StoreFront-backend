@@ -48,9 +48,14 @@ router.put("/products/:id", isAuthenticated, updateProduct);
 
 // orders
 router.post("/orders/:userId", isAuthenticated, validateUser, addOrder);
-router.get("/orders/:userId/:orderId", isAuthenticated, validateUser, getOrder);
-router.put("/orders/:userId/:orderId", isAuthenticated, validateUser, updateOrder);
 router.get("/orders/:userId", isAuthenticated, validateUser, getOrders);
+router.get("/orders/:userId/:orderId", isAuthenticated, validateUser, getOrder);
+router.put(
+  "/orders/:userId/:orderId",
+  isAuthenticated,
+  validateUser,
+  updateOrder
+);
 
 
 export default router;
