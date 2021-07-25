@@ -26,7 +26,7 @@ beforeAll(async () => {
   });
 });
 
-describe("ProductStore Methods", () => {
+describe("Product Store Methods", () => {
   it("should return a list of products", async () => {
     const products = await store.getAllProducts();
     expect(products).toBeDefined();

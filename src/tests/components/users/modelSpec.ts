@@ -24,7 +24,7 @@ beforeAll(async () => {
   users.forEach(async (user) => await store.addUser(user));
 });
 
-describe("UserStore", () => {
+describe("User Store", () => {
   it("should be defined", () => {
     expect(store).toBeDefined();
   });

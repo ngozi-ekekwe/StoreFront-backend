@@ -2,7 +2,7 @@ import { Order, OrderStore } from "../../../components/orders/model";
 
 const store = new OrderStore();
 
-describe("OrderStore", () => {
+describe("Order Store", () => {
   it("should be defined", () => {
     expect(store).toBeDefined();
   });

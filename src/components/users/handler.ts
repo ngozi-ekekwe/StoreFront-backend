@@ -17,6 +17,7 @@ export const addUser = async (req: Request, res: Response): Promise<void> => {
     res.status(201).json({
       token,
       success: true,
+      user: newUser,
     });
   } catch (e) {
     console.log(e);
