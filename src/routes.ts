@@ -6,8 +6,6 @@ import {
   addUser,
   getUserById,
   getAllUsers,
-  deleteUser,
-  updateUser,
   getCustomerOrders,
 } from "./components/users";
 
@@ -15,9 +13,6 @@ import {
   addProduct,
   getProductById,
   getAllProducts,
-  deleteProduct,
-  updateProduct,
-  getMostPopularProduct,
 } from "./components/products";
 
 import {
@@ -34,16 +29,12 @@ router.post("/users", addUser);
 router.get("/users", isAuthenticated, getAllUsers);
 router.get("/users/:userId", isAuthenticated, getUserById);
 router.get("/users/:userId/orders", isAuthenticated, getCustomerOrders);
-router.put("/users/:userId", isAuthenticated, updateUser);
-router.delete("/users/:userId", isAuthenticated, deleteUser);
 router.get("/users/:userId/cart", isAuthenticated, validateUser);
 
 // products
-router.get("/products", getAllProducts);
-router.get("/products/:id", getProductById);
 router.post("/products", isAuthenticated, addProduct);
-router.delete("/products/:id", isAuthenticated, deleteProduct);
-router.put("/products/:id", isAuthenticated, updateProduct);
+router.get("/products/:id", getProductById);
+router.get("/products", getAllProducts);
 
 // orders
 router.post("/orders/:userId", isAuthenticated, validateUser, addOrder);

@@ -96,19 +96,6 @@ export const getProductsInOrder = async (
   }
 };
 
-export const deleteOrder = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const { id } = req.params;
-  try {
-    const order = await store.delete(id);
-    res.status(200).json(order);
-  } catch (e) {
-    console.log(e);
-  }
-};
-
 export const listCustomersCompletedOrders = async (
   req: Request,
   res: Response

@@ -53,39 +53,6 @@ export const getAllProducts = async (
   }
 };
 
-export const deleteProduct = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const { id } = req.params;
-  try {
-    const product = await store.deleteProduct(id);
-    res.status(200).json(product);
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-export const updateProduct = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const { id } = req.params;
-  const product: any = {
-    name: req.body.product.name,
-    price: req.body.product.price,
-    category: req.body.product.category,
-  };
-  try {
-    await store.updateProduct(id, product);
-    res.status(200).json({
-      message: "Product Successfully updated",
-    });
-  } catch (e) {
-    console.log(e);
-  }
-};
-
 export const getMostPopularProduct = async (
   req: Request,
   res: Response

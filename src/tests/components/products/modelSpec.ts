@@ -37,7 +37,7 @@ describe("ProductStore Methods", () => {
   });
 
   it("should get product by category", async (done) => {
-    const productsByCategory = await store.getProductsByCategory(
+    const productsByCategory = await store.getProductByCategory(
       "testCategory2"
     );
     expect(productsByCategory).toBeDefined();
