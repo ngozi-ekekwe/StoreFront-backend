@@ -6,14 +6,12 @@ A NodeJS API to be consumed by a frontend application to allow users to browse a
 ## API Features
 
 ## Tech Stack
-
 ```
 - Postgres
 - NodeJS
 - Express
 - TypeScript
 - Jasmine
-
 ```
 
 

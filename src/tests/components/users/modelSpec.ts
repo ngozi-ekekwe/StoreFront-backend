@@ -20,9 +20,8 @@ const users = [
   },
 ];
 
-beforeAll(async (done) => {
+beforeAll(async () => {
   users.forEach(async (user) => await store.addUser(user));
-  done();
 });
 
 describe("UserStore", () => {
@@ -46,16 +45,14 @@ describe("UserStore", () => {
     expect(store.getUserById).toBeDefined();
   });
 
-  it("should return a list of users", async (done) => {
+  it("should return a list of users", async () => {
     const users = await store.getAllUsers();
     expect(users).toBeDefined();
     expect(users?.length).toBeGreaterThan(0);
-    done();
   });
 
-  it("should return a single user", async (done) => {
+  it("should return a single user", async () => {
     const user = await store.getUserById("1");
     expect(user).toBeDefined();
-    done();
   });
 });

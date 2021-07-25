@@ -20,23 +20,21 @@ const products = [
   },
 ];
 
-beforeAll(async (done) => {
+beforeAll(async () => {
   products.forEach(async (product) => {
     await store.addProduct(product);
   });
-  done();
 });
 
 describe("ProductStore Methods", () => {
-  it("should return a list of products", async (done) => {
+  it("should return a list of products", async () => {
     const products = await store.getAllProducts();
     expect(products).toBeDefined();
     // expect(products?.length).toBeGreaterThan(0);
     // expect(products).toEqual(products)
-    done();
   });
 
-  it("should get product by category", async (done) => {
+  it("should get product by category", async () => {
     const productsByCategory = await store.getProductByCategory(
       "testCategory2"
     );
@@ -50,13 +48,11 @@ describe("ProductStore Methods", () => {
     //     category: 'testCategory2',
     //   }
     // ])
-    done();
   });
 
-  it("should get product by id", async (done) => {
+  it("should get product by id", async () => {
     const productById = await store.getProductById("1");
     expect(productById).toBeDefined();
     // expect(productById?.name).toBe('testProduct1');
-    done();
   });
 });
