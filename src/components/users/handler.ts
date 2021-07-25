@@ -67,7 +67,6 @@ export const updateUser = async (
 ): Promise<void> => {
   const { userId } = req.params;
   const user: User = {
-    id: userId,
     firstName: req.body.user.firstName,
     lastName: req.body.user.lastName,
     password: req.body.user.password,

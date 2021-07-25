@@ -22,4 +22,10 @@ describe("OrderStore", () => {
   it("should have a method addOrder", () => {
     expect(store.addOrder).toBeDefined();
   });
+
+  it("should return customers orders", () => {});
+
+  it("should return completed orders", () => {});
+
+  it("should return open orders", () => {});
 });

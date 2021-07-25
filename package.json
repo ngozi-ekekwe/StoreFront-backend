@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "db-migrate --env test up && jasmine && db-migrate ---env test reset",
+    "test": "npm run db:create && db-migrate --env test up && npm run build && jasmine && npm run db:drop",
     "jasmine": "jasmine",
     "lint-fix": "eslint . --ext .ts --fix",
+    "db:create": "db-migrate db:create testDB",
+    "db:drop": "db-migrate db:drop testDB",
     "eslint": "eslint . --ext .ts",
     "prettier": "prettier --config .prettierrc './src/**/*.ts' --write",
     "build": "npx tsc",

@@ -71,8 +71,7 @@ export const updateProduct = async (
   res: Response
 ): Promise<void> => {
   const { id } = req.params;
-  const product: Product = {
-    id: req.body.product.id,
+  const product: any = {
     name: req.body.product.name,
     price: req.body.product.price,
     category: req.body.product.category,

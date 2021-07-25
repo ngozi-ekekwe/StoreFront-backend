@@ -1,14 +1,20 @@
 import Client from "../../database";
 
 export type Product = {
-  id: Number;
   name: String;
   price: Number;
   category: String;
 };
 
+export type Products = {
+  id: Number;
+  name: String;
+  price: String;
+  category: String;
+};
+
 export class ProductStore {
-  async getAllProducts(): Promise<Product[] | undefined> {
+  async getAllProducts(): Promise<Products[] | undefined> {
     try {
       const conn = await Client.connect();
       const sql = "SELECT * FROM products";
@@ -71,7 +77,7 @@ export class ProductStore {
     }
   }
 
-  async addProduct(product: Product): Promise<Product[] | undefined> {
+  async addProduct(product: any): Promise<Product[] | undefined> {
     const { name, price, category } = product;
     try {
       const conn = await Client.connect();
@@ -79,7 +85,7 @@ export class ProductStore {
         "INSERT INTO products (name, price, category) VALUES ($1, $2, $3) RETURNING *";
       const result = await conn.query(sql, [name, price, category]);
       conn.release();
-      return result.rows;
+      return result.rows[0];
     } catch (e) {
       console.log(e);
     }
@@ -87,7 +93,7 @@ export class ProductStore {
 
   async getProductsByCategory(
     category: String
-  ): Promise<Product[] | undefined> {
+  ): Promise<Products[] | undefined> {
     try {
       const conn = await Client.connect();
       const sql = "SELECT * FROM products WHERE category=($1)";
@@ -99,7 +105,7 @@ export class ProductStore {
     }
   }
 
-  async getMostPopularProducts(): Promise<Product[] | undefined> {
+  async getMostPopularProducts(): Promise<Products[] | undefined> {
     try {
       const conn = await Client.connect();
       const sql =

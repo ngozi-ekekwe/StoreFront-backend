@@ -8,7 +8,6 @@ dotenv.config();
 const { SALT_ROUNDS, PEPPER } = process.env;
 
 export type User = {
-  id: String;
   firstName: String;
   lastName: String;
   password: String;
