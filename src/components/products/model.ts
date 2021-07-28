@@ -1,16 +1,17 @@
 import Client from "../../database";
 
 export type Product = {
-  name: String;
-  price: Number;
-  category: String;
+  id?: number;
+  name: string;
+  price: number;
+  category: string;
 };
 
 export type Products = {
-  id: Number;
-  name: String;
-  price: String;
-  category: String;
+  id: number;
+  name: string;
+  price: string;
+  category: string;
 };
 
 export class ProductStore {

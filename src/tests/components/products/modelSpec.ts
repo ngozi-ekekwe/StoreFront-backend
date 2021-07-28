@@ -30,8 +30,7 @@ describe("Product Store Methods", () => {
   it("should return a list of products", async () => {
     const products = await store.getAllProducts();
     expect(products).toBeDefined();
-    // expect(products?.length).toBeGreaterThan(0);
-    // expect(products).toEqual(products)
+    expect(products?.length).toBeGreaterThan(0);
   });
 
   it("should get product by category", async () => {
@@ -39,20 +38,20 @@ describe("Product Store Methods", () => {
       "testCategory2"
     );
     expect(productsByCategory).toBeDefined();
-    // expect(productsByCategory?.length).toBeGreaterThan(0);
-    // expect(productsByCategory).toEqual([
-    //   {
-    //     id: 3,
-    //     name: 'testProduct3',
-    //     price: '10',
-    //     category: 'testCategory2',
-    //   }
-    // ])
+    expect(productsByCategory?.length).toBeGreaterThan(0);
   });
 
   it("should get product by id", async () => {
-    const productById = await store.getProductById("1");
-    expect(productById).toBeDefined();
-    // expect(productById?.name).toBe('testProduct1');
+    const product = await store.getProductById("1");
+    expect(product).toBeDefined();
+    expect(product?.name).toBeDefined();
+    expect(product?.price).toBeDefined();
+    expect(product?.category).toBeDefined();
+  });
+
+  it("should get most popular products", async () => {
+    const products = await store.getMostPopularProducts();
+    expect(products).toBeDefined();
+    expect(products?.length).toBeGreaterThan(0);
   });
 });
