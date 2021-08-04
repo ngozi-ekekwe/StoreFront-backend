@@ -12,7 +12,7 @@
     "eslint": "eslint . --ext .ts",
     "prettier": "prettier --config .prettierrc './src/**/*.ts' --write",
     "build": "npx tsc",
-    "start": "export NODE_ENV=dev nodemon",
+    "start": "nodemon",
     "migration": "db-migrate up",
     "migration-down": "db-migrate down -c 5",
     "prepare": "husky install"

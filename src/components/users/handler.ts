@@ -31,7 +31,7 @@ export const addUser = async (req: Request, res: Response): Promise<void> => {
 };
 
 export const login = async (req: Request, res: Response) => {
-  const { firstName, password } = req.body;
+  const { firstName, password } = req.body.user;
   try {
     const user = await store.authenticate(firstName, password);
     if (user) {

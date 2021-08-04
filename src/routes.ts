@@ -7,6 +7,7 @@ import {
   getUserById,
   getAllUsers,
   getCustomerOrders,
+  login,
 } from "./components/users";
 
 import {
@@ -26,6 +27,7 @@ const router = Router();
 
 // users
 router.post("/users", addUser);
+router.post("/login", login);
 router.get("/users", isAuthenticated, getAllUsers);
 router.get("/users/:userId", isAuthenticated, getUserById);
 router.get("/users/:userId/orders", isAuthenticated, getCustomerOrders);

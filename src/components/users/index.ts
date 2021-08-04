@@ -3,6 +3,7 @@ import {
   getUserById,
   getAllUsers,
   getCustomerOrders,
+  login,
 } from "./handler";
 
-export { addUser, getUserById, getAllUsers, getCustomerOrders };
+export { addUser, getUserById, getAllUsers, getCustomerOrders, login };

@@ -5,13 +5,10 @@ A NodeJS API to be consumed by a frontend application to allow users to browse a
 
 ## API Features
 
-## Tech Stack
+## Pre-requisites
 ```
 - Postgres
 - NodeJS
-- Express
-- TypeScript
-- Jasmine
 ```
 
 
@@ -19,21 +16,30 @@ A NodeJS API to be consumed by a frontend application to allow users to browse a
 
 Clone Repository
 ```
-git clone https://github.com/ngozi-ekekwe/StoreFront-backend.git
+- git clone https://github.com/ngozi-ekekwe/StoreFront-backend.git
+- cd StoreFront-backend
+
 ```
 
 Copy Environment Secrets
 ```
-create a `.env` file in your root folder then copy the content from  `.env.sample and replace the values with your environment configuration / secrets`
+- create a `.env` file in your root folder then copy the content from  `.env.sample and replace the values with your environment configuration / secrets`
+
+DB_DEV={DEV DATABASE}
+DB_TEST={TEST DATABASE}
+SALT_ROUNDS={number of rounds for the salt hashing algorithm}
+PEPPER={pepper for hashing}
+JWT_SECRET={secret for JWT}
 ```
 
 Database
 
 ```
- - Create a database to hold records for your store, after that is setup properly, you should have access to the Username, password, host and user
+ - Create database store_front_dev in postgres
 
  - Add your database configuration setting to your `.env` file
 ```
+
 
 Install Dependencies
 
@@ -48,26 +54,21 @@ Run migrations
   $ npm run db-migrate
 ```
 
-Start Server
-```sh
-  $ npm run start
-```
-
 Testing
 
 ```sh
   $ npm run test
 ```
 
-Linting
-```
-
-```
-
 Prettier
 
+```sh
+  $ npm run prettier
 ```
 
+Start Server
+```sh
+  $ npm run start
 ```
 
 

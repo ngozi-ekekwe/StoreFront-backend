@@ -101,20 +101,6 @@
       }
     },
     "/users": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Get all Users",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/Users"
-            }
-          }
-        }
-      },
       "post": {
         "tags": [
           "Users"
@@ -135,6 +121,46 @@
             "description": "Created",
             "schema": {
               "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get all Users",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Login User",
+        "requestBody": {
+          "description": "User",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/NewUser"
             }
           }
         }
@@ -240,7 +266,9 @@
             "name": "status",
             "in": "query",
             "required": false,
-            "description": "Status of order that we want to find"
+            "description": "Status of order that we want to find",
+            "type": "string",
+            "enum": ["open", "closed"]
           }
         ]
       }
@@ -424,6 +452,23 @@
         "quantity": {
           "type": "number",
           "description": "Quantity of Product"
+        }
+      }
+    },
+    "Login": {
+      "properties": {
+        "user": {
+          "type": "object",
+          "properties": {
+            "firstName": {
+              "type": "string",
+              "description": "First Name"
+            },
+            "password": {
+              "type": "string",
+              "description": "Password"
+            }
+          }
         }
       }
     },

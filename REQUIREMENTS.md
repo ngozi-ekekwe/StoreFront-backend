@@ -1,51 +1,17 @@
-# API Requirements
-The company stakeholders want to create an online storefront to showcase their great product ideas. Users need to be able to browse an index of all products, see the specifics of a single product, and add products to an order that they can view in a cart page. You have been tasked with building the API that will support this application, and your coworker is building the frontend.
-
-These are the notes from a meeting with the frontend developer that describe what endpoints the API needs to supply, as well as data shapes the frontend and backend have agreed meet the requirements of the application. 
-
 ## API Endpoints
 
-#### Products
-- Index 
-  http://localhost:3000/api/v1/products
-  
-- Show
-  http://localhost:3000/api/v1/products/1
+Swagger API endpoints are defined in the [`swagger.json`](./src/swagger.json) file. 
+Also after starting the application, navigating to  ```localhost:{port}/api-docs``` will show the API documentation.
 
-- Create [token required]
-  http://localhost:3000/api/v1/products
-
-- [OPTIONAL] Top 5 most popular products 
-
-- Products by category (args: product category)
-  http://localhost:3000/api/v1/products?category=lemon
-
-
-#### Users
-- Index [token required]
-  http://localhost:3000/api/v1/users
-
-- Show [token required]
-  http://localhost:3000/api/v1/users/1
-
-- Create [token required]
-  http://localhost:3000/api/v1/users
-
-
-
-#### Orders
-- Current Order by user (args: user id)[token required]
-http://localhost:3000/api/v1/orders/customer/1
-
-- Completed Orders by user (args: user id)[token required]
-
+After successfully creating a user, a token will be generated and can be used to authenticate the user.This token can also be added to swagger document by clicking on the "Authorize" button
 
 ## Data Shapes
+
 #### Product
 -  id
 - name
 - price
-- [OPTIONAL] category
+- category
 
 #### User
 - id
@@ -55,7 +21,47 @@ http://localhost:3000/api/v1/orders/customer/1
 
 #### Orders
 - id
-- id of each product in the order
-- quantity of each product in the order
 - user_id
 - status of order (active or complete)
+
+##### OrderProducts
+- id 
+- product_id of each product in the order
+- order_id
+- quantity of each product in the order
+
+
+#### Products
+- Index 
+  localhost:{port}/api/v1/products
+  
+- Show
+  localhost:{port}/api/v1/products/1
+
+- Create [token required]
+  localhost:{port}/api/v1/products
+
+- Top 5 most popular products 
+
+- Products by category (args: product category)
+  localhost:{port}/api/v1/products?category=lemon
+
+
+#### Users
+- Index [token required]
+  localhost:{port}/api/v1/users
+
+- Show [token required]
+  localhost:{port}/api/v1/users/1
+
+- Create [token required]
+  localhost:{port}/api/v1/users
+
+
+
+#### Orders
+- Current Order by user (args: user id)[token required]
+{localhost:}/api/v1/orders/customer/1
+
+- Completed Orders by user (args: user id)[token required]
+
