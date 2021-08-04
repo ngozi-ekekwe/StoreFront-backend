@@ -1,8 +1,5 @@
 import { Request, Response } from "express";
-import { ProductStore, Product } from "./model";
-import dotenv from "dotenv";
-
-dotenv.config();
+import { ProductStore } from "./model";
 
 const store = new ProductStore();
 

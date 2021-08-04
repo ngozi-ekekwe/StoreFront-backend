@@ -1,31 +1,16 @@
 import { Request, Response } from "express";
-import { OrderStore, Order } from "./model";
-import dotenv from "dotenv";
-
-dotenv.config();
+import { OrderStore } from "./model";
+import { createOrAddOrder } from "./helper";
 
 const store = new OrderStore();
 
 export const addOrder = async (req: Request, res: Response): Promise<void> => {
-  let orderId;
-  let userOrder;
   const { userId } = req.params;
   const { order } = req.body;
   try {
-    // check if a user has already placed an order
-    userOrder = await store.getUserOpenOrders(userId);
-    if (userOrder?.id) {
-      orderId = userOrder.id;
-    } else {
-      userOrder = await store.addOrder(userId);
-      // @ts-ignore
-      orderId = userOrder.id;
-    }
-    const orderItems = order.orderItems;
-    // add products to order
-    await store.addProductOrder(orderId, orderItems);
-    // get all products in order
-    const products = await store.getAllProductsInAnOrder(orderId);
+    const userOrder = await createOrAddOrder(userId);
+    await store.addProductOrder(userOrder!.id, order.orderItems);
+    const products = await store.getAllProductsInAnOrder(userOrder!.id);
     const result = {
       ...userOrder,
       items: products,
@@ -117,8 +102,7 @@ export const getCustomerCurrentOrder = async (
   try {
     const cart = await store.getUserOpenOrders(userId);
     const orderId = cart?.id;
-    // @ts-ignore
-    const products = await store.getAllProductsInAnOrder(orderId);
+    const products = await store.getAllProductsInAnOrder(orderId!);
     const order = {
       ...cart,
       cart: products,

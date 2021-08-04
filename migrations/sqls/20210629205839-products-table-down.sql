@@ -1,2 +1,2 @@
 /* Replace with your SQL commands */
-DROP table products;
+DROP table products CASCADE;

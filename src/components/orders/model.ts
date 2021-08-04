@@ -6,9 +6,9 @@ export type OrderItem = {
 };
 
 export type Order = {
-  id: Number;
+  id: String;
   status: String;
-  user_id: Number;
+  user_id: String;
   orderItems: OrderItem[];
 };
 
@@ -112,7 +112,7 @@ export class OrderStore {
       console.log(e);
     }
   }
-  async addOrder(user_id: String): Promise<Order[] | undefined> {
+  async addOrder(user_id: String): Promise<Order | undefined> {
     try {
       const conn = await Client.connect();
       const status = "open";
@@ -129,7 +129,7 @@ export class OrderStore {
 
   async addProductOrder(
     orderId: String,
-    orderItems: []
+    orderItems: OrderItem[]
   ): Promise<void | undefined> {
     try {
       const conn = await Client.connect();
@@ -156,18 +156,6 @@ export class OrderStore {
       const result = await conn.query(sql, [orderId]);
       conn.release();
       return result.rows;
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  async getProductsInAnOrder(productId: String): Promise<void | undefined> {
-    try {
-      const conn = await Client.connect();
-      const sql = "";
-      const result = conn.query(sql, []);
-      conn.release();
-      return;
     } catch (e) {
       console.log(e);
     }

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm run db:create && db-migrate --env test up && npm run build && jasmine && npm run db:drop",
+    "test": "export NODE_ENV=test && npm run db:create && db-migrate --env test up && npm run build && jasmine && npm run migration-down && npm run db:drop",
     "jasmine": "jasmine",
     "lint-fix": "eslint . --ext .ts --fix",
     "db:create": "db-migrate db:create testDB",
@@ -12,9 +12,9 @@
     "eslint": "eslint . --ext .ts",
     "prettier": "prettier --config .prettierrc './src/**/*.ts' --write",
     "build": "npx tsc",
-    "start": "nodemon",
+    "start": "export NODE_ENV=dev nodemon",
     "migration": "db-migrate up",
-    "migration-down": "db-migrate down",
+    "migration-down": "db-migrate down -c 5",
     "prepare": "husky install"
   },
   "repository": {

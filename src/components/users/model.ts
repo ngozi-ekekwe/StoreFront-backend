@@ -2,24 +2,26 @@ import bcrypt from "bcrypt";
 import Client from "../../database";
 import dotenv from "dotenv";
 import { Order } from "../orders/model";
+import { userInfo } from "os";
 
 dotenv.config();
 
 const { SALT_ROUNDS, PEPPER } = process.env;
 
 export type User = {
+  id?: String;
   firstName: String;
   lastName: String;
   password: String;
 };
 
 export class UserStore {
-  async addUser(user: any): Promise<User | undefined> {
+  async addUser(user: User): Promise<User | undefined> {
     const { firstName, lastName, password } = user;
     try {
       const conn = await Client.connect();
       const hashPassword = bcrypt.hashSync(
-        password + PEPPER,
+        password + PEPPER!,
         parseInt(SALT_ROUNDS as string, 10)
       );
       const sql =
@@ -53,6 +55,29 @@ export class UserStore {
       conn.release();
       return result.rows[0];
     } catch (e) {}
+  }
+
+  async authenticate(
+    firstName: String,
+    password: String
+  ): Promise<User | undefined | null> {
+    try {
+      const conn = await Client.connect();
+      const sql = "SELECT * FROM users WHERE firstname=($1)";
+      const users = await conn.query(sql, [firstName]);
+      if (users.rows.length > 0) {
+        if (
+          await bcrypt.compareSync(password + PEPPER!, users.rows[0].password)
+        ) {
+          conn.release();
+          return users.rows[0];
+        }
+      }
+      conn.release();
+      return null;
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async delete(id: String): Promise<void | undefined> {
