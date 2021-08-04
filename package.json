@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "export NODE_ENV=test && npm run db:create && db-migrate --env test up && npm run build && jasmine && npm run migration-down && npm run db:drop",
+    "test": "export NODE_ENV=test && npm run db:create && db-migrate --env test up && npm run build && jasmine && npm run db:drop",
     "jasmine": "jasmine",
     "lint-fix": "eslint . --ext .ts --fix",
     "db:create": "db-migrate db:create testDB",

@@ -14,6 +14,7 @@ import {
   addProduct,
   getProductById,
   getAllProducts,
+  getMostPopularProduct,
 } from "./components/products";
 
 import {
@@ -36,6 +37,7 @@ router.get("/users/:userId/cart", isAuthenticated, validateUser);
 // products
 router.post("/products", isAuthenticated, addProduct);
 router.get("/products/:id", getProductById);
+router.get("/products/all/most-popular", getMostPopularProduct);
 router.get("/products", getAllProducts);
 
 // orders

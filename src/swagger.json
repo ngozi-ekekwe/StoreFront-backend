@@ -58,12 +58,6 @@
             "in": "query",
             "description": "Product Category",
             "required": false
-          },
-          {
-            "name": "filter",
-            "in": "query",
-            "description": "Most Popular",
-            "required": false
           }
         ],
         "responses": {
@@ -96,6 +90,19 @@
             "schema": {
               "$ref": "#/definitions/Product"
             }
+          }
+        }
+      }
+    },
+    "/products/all/most-popular": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get top 5 Products",
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }

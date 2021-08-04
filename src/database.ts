@@ -5,8 +5,6 @@ dotenv.config();
 
 const { DB_DEV, NODE_ENV, DB_TEST } = process.env;
 
-console.log(NODE_ENV);
-
 const Client = new Pool({
   host: "127.0.0.1",
   database: NODE_ENV === "test" ? DB_TEST : DB_DEV,

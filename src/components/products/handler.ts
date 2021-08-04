@@ -33,14 +33,11 @@ export const getAllProducts = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { category, filter } = req.query;
+  const { category } = req.query;
   let products;
   try {
     if (category) {
       products = await store.getProductByCategory(category as String);
-    }
-    if (filter) {
-      products = await store.getMostPopularProducts();
     } else {
       products = await store.getAllProducts();
     }
@@ -51,13 +48,13 @@ export const getAllProducts = async (
 };
 
 export const getMostPopularProduct = async (
-  req: Request,
+  _req: Request,
   res: Response
 ): Promise<void> => {
   try {
     const products = await store.getMostPopularProducts();
     res.status(200).json({
-      message: "Most popular products",
+      products,
     });
   } catch (e) {
     console.log(e);
