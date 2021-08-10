@@ -27,9 +27,13 @@ Copy Environment Secrets
 
 DB_DEV={DEV DATABASE}
 DB_TEST={TEST DATABASE}
+POSTGRESS_USER={Database User}
+POSTGRES_PASSWORD={}
+POSTGRESS_HOST={Database Host}
 SALT_ROUNDS={number of rounds for the salt hashing algorithm}
 PEPPER={pepper for hashing}
-JWT_SECRET={secret for JWT}
+JWT_SECRET={JWT Secret }
+NODE_ENV={Test / development Environment}
 ```
 
 Database
