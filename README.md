@@ -55,7 +55,7 @@ Install Dependencies
 Run migrations
 
 ```sh
-  $ npm run db-migrate
+  $ npm run migration
 ```
 
 Testing
