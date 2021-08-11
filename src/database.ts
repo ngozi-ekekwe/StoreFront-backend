@@ -7,14 +7,14 @@ const {
   DB_DEV,
   NODE_ENV,
   DB_TEST,
-  POSTGRESS_HOST,
-  POSTGRESS_USER,
+  POSTGRES_HOST,
+  POSTGRES_USER,
   POSTGRES_PASSWORD,
 } = process.env;
 
 const Client = new Pool({
-  host: POSTGRESS_HOST,
-  user: POSTGRESS_USER,
+  host: POSTGRES_HOST,
+  user: POSTGRES_USER,
   password: POSTGRES_PASSWORD,
   database: NODE_ENV === "test" ? DB_TEST : DB_DEV,
   port: 5432,

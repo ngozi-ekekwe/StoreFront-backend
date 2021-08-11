@@ -12,6 +12,7 @@ A NodeJS API to be consumed by a frontend application to allow users to browse a
 ```
 
 
+
 ## Local Development
 
 Clone Repository
@@ -21,19 +22,19 @@ Clone Repository
 
 ```
 
-Copy Environment Secrets
+Enviromental Variables Set up
 ```
 - create a `.env` file in your root folder then copy the content from  `.env.sample and replace the values with your environment configuration / secrets`
 
-DB_DEV={DEV DATABASE}
-DB_TEST={TEST DATABASE}
-POSTGRESS_USER={Database User}
-POSTGRES_PASSWORD={}
-POSTGRESS_HOST={Database Host}
-SALT_ROUNDS={number of rounds for the salt hashing algorithm}
-PEPPER={pepper for hashing}
-JWT_SECRET={JWT Secret }
-NODE_ENV={Test / development Environment}
+DB_DEV=testDB
+DB_TEST = store_front
+POSTGRES_USER = db_user
+POSTGRES_PASSWORD=db_password
+POSTGRES_HOST = 5432
+SALT_ROUNDS = 10
+PEPPER = pepper
+JWT_SECRET= secret
+NODE_ENV= dev
 ```
 
 Database
@@ -74,6 +75,10 @@ Start Server
 ```sh
   $ npm run start
 ```
+
+Running Ports
+
+- Server will start on port 3000 and the database on port 5432
 
 
 
